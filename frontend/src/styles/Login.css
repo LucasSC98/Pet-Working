@@ -1,0 +1,137 @@
+.wrapper-login {
+  width: 420px;
+  background: #026a6e;
+  color: rgb(255, 255, 255);
+  border-radius: 10px;
+  padding: 30px 40px;
+  margin-left: 580px;
+}
+
+.wrapper-login .input-box {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  margin: 30px 0;
+}
+
+.wrapper-login .input-box i {
+  position: absolute;
+  right: 10px;
+  top: 45%;
+  transform: translate(-50%);
+  font-size: 20px;
+}
+
+.input-box input {
+  width: 83.5%;
+  height: 90%;
+  padding: 10px 45px 5px 20px;
+  font-size: 18px;
+  color: rgb(255, 255, 255);
+  background: transparent;
+  border: none;
+  outline: none;
+  border: 2px solid rgb(221, 221, 221);
+  border-radius: 40px;
+  transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+.input-box input:hover {
+  border-color: rgb(255, 128, 0);
+}
+
+.wrapper-login .lembrar-esqueceu-acesso {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.lembrar-esqueceu-acesso label input {
+  margin-right: 10px;
+}
+
+.lembrar-esqueceu-acesso a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  margin-top: 3px;
+}
+
+.lembrar-esqueceu-acesso a:hover {
+  text-decoration: underline;
+  color: rgb(255, 128, 0);
+}
+
+.wrapper-login .button {
+  width: 100%;
+  height: 40px;
+  background: white;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+  margin-top: 10px;
+  transition: background-color 0.5s, transform 0.3s;
+}
+
+.wrapper-login .button:hover {
+  background: rgb(255, 128, 0);
+  color: rgb(255, 255, 255);
+  transform: translateY(-2px);
+}
+
+.wrapper-login .button:disabled {
+  background: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+  transform: none;
+  opacity: 0.8;
+}
+
+.wrapper-login .link-registro {
+  text-align: center;
+  margin: 30px 0 15px;
+}
+
+.link-registro a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+}
+
+.link-registro a:hover {
+  text-decoration: underline;
+  color: rgb(255, 128, 0);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.login-image {
+  position: fixed;
+  left: 35%;
+  top: 62%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+  height: auto;
+  mix-blend-mode: multiply;
+  opacity: 0.9;
+  filter: drop-shadow(10px 10px 20px rgba(0, 0, 0, 0.2));
+  animation: fadeInZoom 1.2s ease-out forwards;
+}
+
+@keyframes fadeInZoom {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

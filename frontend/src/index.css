@@ -1,0 +1,46 @@
+:root {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Arial", sans-serif;
+}
+
+body.home-page {
+  padding: 0%;
+  margin: 0%;
+  display: block;
+  min-height: 100vh;
+}
+
+body.login-page {
+  padding: 0%;
+  margin: 0%;
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: url("assets/3.jpg");
+  background-size: cover;
+}
+
+body.cadastro-page {
+  padding: 0%;
+  margin: 0%;
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: url("assets/3.jpg");
+  background-size: cover;
+}
+
+input::placeholder {
+  color: #e8e6e6;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #000000;
+    background-color: #ffffff;
+  }
+}

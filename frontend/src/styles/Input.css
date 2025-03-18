@@ -1,0 +1,14 @@
+.input-box-cadastro select {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    background: rgb(2, 106, 110);
+    border: 2px solid rgb(221, 221, 221);
+    border-radius: 40px;
+    outline: none;
+    color: rgb(255, 255, 255);
+  }
+  
+  .input-box-cadastro select:focus {
+    border-color: #ff8000;
+  }
