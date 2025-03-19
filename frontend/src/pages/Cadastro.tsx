@@ -68,7 +68,7 @@ function Cadastro() {
       setSucesso(true);
 
       setTimeout(() => {
-        navigation("/home");
+        navigation("/dashboard");
       }, 2000);
     } catch (error: unknown) {
       console.error("Erro no cadastro:", error);

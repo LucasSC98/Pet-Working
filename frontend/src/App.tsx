@@ -12,7 +12,6 @@ import Dashboard from "./pages/Dashboard";
 import Agendamentos from "./pages/Agendamentos";
 import MeusPets from "./pages/MeusPets";
 import MinhaConta from "./pages/MinhaConta";
-import CadastroPet from "./pages/CadastroPet";
 import { AuthProvider } from "./context/AuthContext";
 
 
@@ -43,7 +42,6 @@ function AppContent() {
         <Route path="/agendamentos" element={<Agendamentos />} />
         <Route path="/pets" element={<MeusPets />} />
         <Route path="/minha-conta" element={<MinhaConta />} />
-        <Route path="/novo-pet" element={<CadastroPet />} />
       </Routes>
     </>
   );

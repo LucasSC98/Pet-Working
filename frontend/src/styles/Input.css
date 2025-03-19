@@ -12,3 +12,46 @@
   .input-box-cadastro select:focus {
     border-color: #ff8000;
   }
+
+.input-box {
+    margin-bottom: 25px;  /* Aumentado de 15px para 25px */
+}
+
+.input-box label {
+    display: block;
+    margin-bottom: 1px; 
+    font-weight: 500;
+    color: #026a6e;
+    font-size: 15px;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 40px; 
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.input-box select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 40px;
+    background-color: transparent;
+    outline: none;
+}
+
+.input-box select:focus {
+    border-color: #026a6e;
+}
+
+.input-box select option {
+    background-color: white;
+    color: #026a6e;
+}
+
+.input-box:last-child {
+    margin-bottom: 30px;
+}

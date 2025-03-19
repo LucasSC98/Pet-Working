@@ -363,7 +363,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--primary-light);
+    background-color: transparent;
   }
   
   .pet-avatar img {

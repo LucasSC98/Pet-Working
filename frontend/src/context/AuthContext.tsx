@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 interface Usuario {
-  id: number;
+  id_usuario: number;
   nome: string;
   email: string;
   fotoDePerfil?: string;
@@ -91,7 +91,7 @@ const atualizarDadosDoUsuario = (newUserData: Partial<Usuario>) => {
       usuario: { ...parsedUser.usuario, ...newUserData }
     };
     localStorage.setItem("@PetWorking:user", JSON.stringify(updatedUser));
-    setUser(prevUser => ({ ...prevUser, ...newUserData }));
+    setUser(prevUser => prevUser ? ({ ...prevUser, ...newUserData } as Usuario) : null);
   }
 };
 

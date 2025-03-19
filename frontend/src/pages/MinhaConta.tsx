@@ -4,6 +4,7 @@ import { useAuth } from "../hooks/useAuth";
 import api from "../services/api";
 import "../styles/MinhaConta.css";
 import useBodyClass from "../hooks/useBodyClass";
+import Toast from "../components/Toast";
 
 interface DadosUsuario {
   id: number;
@@ -39,15 +40,16 @@ const MinhaConta = () => {
   const [alterandoSenha, setAlterandoSenha] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [fotoAlterada, setFotoAlterada] = useState(false);
+  const [mostrarNotificacao, setMostrarNotificacao] = useState(false);
   
-  // Buscar dados completos do usuário
+  
   useEffect(() => {
     const buscarDadosUsuario = async () => {
       if (user?.id) {
         try {
           const response = await api.get(`/usuarios/${user.id}`);
           
-          // Formatar data de nascimento para o formato YYYY-MM-DD aceito pelo input type="date"
+        // formatar a data de nascimento para o formato yyyy-mm-dd
           const data = new Date(response.data.dataNascimento);
           const dataFormatada = data.toISOString().split('T')[0];
           
@@ -140,6 +142,7 @@ const MinhaConta = () => {
   
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    
 
     if (alterandoSenha && dadosUsuario.senha !== dadosUsuario.confirmarSenha) {
       setMensagem({ tipo: "erro", texto: "As senhas não coincidem." });
@@ -147,8 +150,6 @@ const MinhaConta = () => {
     }
   
     try {
-      setMensagem({ tipo: "info", texto: "Salvando alterações..." });
-      setCarregando(true);
   
       const dadosParaAtualizar: Partial<DadosUsuario> = {
         nome: dadosUsuario.nome,
@@ -170,13 +171,10 @@ const MinhaConta = () => {
       if (response.data) {
         atualizarDadosDoUsuario({
             nome: dadosUsuario.nome,
-            fotoDePerfil: dadosUsuario.fotoDePerfil
+            fotoDePerfil: dadosUsuario.fotoDePerfil ?? undefined
           });
-        setMensagem({
-          tipo: "sucesso",
-          texto: "Dados atualizados com sucesso!",
-        });
-
+          
+        setMostrarNotificacao(true);
         setEdicaoAtiva(false);
         setAlterandoSenha(false);
         setFotoAlterada(false);
@@ -185,7 +183,9 @@ const MinhaConta = () => {
           senha: "",
           confirmarSenha: "",
         }));
+        
       }
+      
   
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
@@ -198,12 +198,14 @@ const MinhaConta = () => {
       setCarregando(false);
     }
   };
+
+  
   
   if (carregando && !dadosUsuario.nome) {
     return (
       <DashboardLayout>
         <div className="loading-container">
-          <p>Carregando seus dados...</p>
+          <p>Carregando dados</p>
         </div>
       </DashboardLayout>
     );
@@ -212,6 +214,12 @@ const MinhaConta = () => {
   return (
     <DashboardLayout>
       <div className="minha-conta-container">
+      <Toast 
+          message="Alterações salvas com sucesso!"
+          type="successo"
+          show={mostrarNotificacao}
+          onClose={() => setMostrarNotificacao(false)}
+        />
         <div className="section-header">
           <h1>Minha Conta</h1>
           {!edicaoAtiva ? (
@@ -258,19 +266,40 @@ const MinhaConta = () => {
               )}
             </div>
             
-            {fotoAlterada && edicaoAtiva && (
-              <button 
-                type="button"
-                onClick={() => {
-                  setPreviewImage(dadosUsuario.fotoDePerfil);
-                  setFotoAlterada(false);
-                }} 
-                className="btn-link mt-2"
-              >
-                Remover nova foto
-              </button>
-            )}
-          </div>
+            
+  {edicaoAtiva && dadosUsuario.fotoDePerfil && (
+    <button 
+      type="button"
+      onClick={async () => {
+        try {
+          setMensagem({ tipo: "info", texto: "Removendo foto..." });
+          setCarregando(true);
+          
+          await api.patch(`/usuarios/${dadosUsuario.id}`, {
+            fotoDePerfil: null
+          });
+          
+          setPreviewImage(null);
+          setDadosUsuario(prev => ({ ...prev, fotoDePerfil: null }));
+          atualizarDadosDoUsuario({ fotoDePerfil: undefined });
+          
+          setMensagem({ tipo: "sucesso", texto: "Foto removida com sucesso!" });
+        } catch (error) {
+          console.error("Erro ao remover foto:", error);
+          setMensagem({ 
+            tipo: "erro", 
+            texto: "Erro ao remover a foto. Tente novamente." 
+          });
+        } finally {
+          setCarregando(false);
+        }
+      }} 
+      className="btn-primary"
+    >
+      Remover Foto Atual
+    </button>
+  )}
+</div>
           
           <div className="perfil-dados">
             <form onSubmit={handleSubmit}>
@@ -295,7 +324,7 @@ const MinhaConta = () => {
                     value={dadosUsuario.email} 
                     disabled={true} 
                   />
-                  <small>O email não pode ser alterado.</small>
+                  <p>O Email não pode ser alterado.</p>
                 </div>
               </div>
               
@@ -307,9 +336,9 @@ const MinhaConta = () => {
                     name="cpf" 
                     value={dadosUsuario.cpf} 
                     onChange={handleChange} 
-                    disabled={!edicaoAtiva} 
-                    required 
+                    disabled={true}
                   />
+                  <p>O CPF não pode ser alterado.</p>
                 </div>
                 
                 <div className="form-group">
@@ -341,6 +370,7 @@ const MinhaConta = () => {
                 </select>
               </div>
               
+              
               {edicaoAtiva && (
                 <div className="senha-section">
                   <div className="form-row senha-header">
@@ -366,7 +396,7 @@ const MinhaConta = () => {
                           onChange={handleChange} 
                           required={alterandoSenha} 
                         />
-                        <small>A senha deve ter pelo menos 8 caracteres.</small>
+                        <p> A senha deve conter 6 caracteres, pelo menos uma letra maiúscula e um número.</p>
                       </div>
                       
                       <div className="form-group">

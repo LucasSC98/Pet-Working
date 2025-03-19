@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useBodyClass from "../hooks/useBodyClass";
 import DashboardLayout from "../components/DashboardLayout";
+import api from "../services/api";
+import { useAuth } from "../hooks/useAuth";
 
 interface Pet {
   id_pet: number;
@@ -28,23 +30,27 @@ interface Agendamento {
 
 const Dashboard = () => {
   useBodyClass("dashboard-page");
-  
-  const [pets] = useState<Pet[]>([]);
+  const { user } = useAuth();
+  const [pets, setPets] = useState<Pet[]>([]);
   const [agendamentos] = useState<Agendamento[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true); // Alterado para true
+
+  const fetchPets = async () => {
+    if (!user) return;
+    try {
+      setLoading(true);
+      const response = await api.get(`/pets/usuario/${user.id}`);
+      setPets(response.data);
+    } catch (error) {
+      console.error("Erro ao carregar pets:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log("um dia eu coloco");
-      } catch (error) {
-        console.error("Erro ao carregar dados:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+    fetchPets();
+  }, [user]); 
 
   const formatarData = (dataString: string) => {
     const data = new Date(dataString);
@@ -127,24 +133,21 @@ const Dashboard = () => {
                       <h2>Meus Pets</h2>
                       <Link to="/pets" className="view-all">Ver todos</Link>
                   </div>
-                  <div className="pets-list">
+                    <div className="pets-list">
                       {pets.length > 0 ? (
-                          pets.map((pet) => (
-                              <div key={pet.id_pet} className="pet-card">
-                                  <img src={pet.foto} alt={pet.nome} className="pet-avatar" />
-                                  <div className="pet-info">
-                                      <h2>{pet.nome}</h2>
-                                      <p>
-                                          <strong>Idade:</strong> {pet.idade} anos
-                                      </p>
-                                      <p>
-                                          <strong>Espécie:</strong> {pet.especie}
-                                      </p>
-                                      <p>
-                                          <strong>Raça:</strong> {pet.raca}
-                                      </p>
-                                  </div>
-                              </div>
+                        pets.slice(0, 2).map((pet) => (
+                          <div key={pet.id_pet} className="pet-card">
+                            <img src={pet.foto} className="pet-avatar" />
+                            <div className="pet-info">
+                              <h2>{pet.nome}</h2>
+                              <p>
+                                <strong>Idade:</strong> {pet.idade} anos
+                              </p>
+                              <p>
+                                <strong>Espécie:</strong> {pet.especie}
+                              </p>
+                            </div>
+                          </div>
                           ))
                       ) : (
                           <p className="no-data">Nenhum pet encontrado</p>
