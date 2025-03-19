@@ -23,7 +23,7 @@ export function validarEmail(value: string)  : boolean  {
 
 // senha com uma letra maiscula e um numero obrigatorio 
 export function validarSenha(value: string) : boolean {
-    const senhaFormato = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const senhaFormato = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
     return senhaFormato.test(value);
 }
 

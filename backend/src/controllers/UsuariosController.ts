@@ -51,12 +51,7 @@ export const criarUsuario =  async (req: Request, res: Response) => {
 export const atualizarUsuario = async (req: AuthRequest, res: Response) => {
     try {
         const { id } = req.params;
-        const { email, ...dadosAtualizacao } = req.body;
-
-        console.log('Dados recebidos para atualização:', {
-            ...dadosAtualizacao,
-            fotoDePerfil: dadosAtualizacao.fotoDePerfil ? 'Foto presente' : 'Sem foto'
-        });
+        const dadosAtualizacao = { ...req.body };
 
         const usuario = await UsuarioModelo.findByPk(id);
         if (!usuario) {
@@ -71,38 +66,38 @@ export const atualizarUsuario = async (req: AuthRequest, res: Response) => {
             });
         }
 
-        if (email) {
-            return res.status(400).json({ 
-                message: 'Não é permitido alterar o email' 
-            });
+        // Remove campos protegidos
+        delete dadosAtualizacao.email;
+
+        // Mantém foto atual se não fornecida
+        if (!dadosAtualizacao.fotoDePerfil) {
+            dadosAtualizacao.fotoDePerfil = usuario.fotoDePerfil;
         }
 
-        // Remove validação de campos obrigatórios para permitir atualização parcial
-        const dadosParaAtualizar = {
-            ...dadosAtualizacao,
-            // Mantém a foto atual se não houver nova foto
-            fotoDePerfil: dadosAtualizacao.fotoDePerfil || usuario.fotoDePerfil
-        };
-
-        await usuario.update(dadosParaAtualizar);
-
-        return res.status(200).json({
-            message: 'Usuário atualizado com sucesso',
-            usuario: {
-                id: usuario.id_usuario,
-                nome: usuario.nome,
-                cpf: usuario.cpf,
-                dataNascimento: usuario.dataNascimento,
-                fotoDePerfil: usuario.fotoDePerfil,
-                genero: usuario.genero
-            }
-        });
-
+        try {
+            await usuario.update(dadosAtualizacao);
+            
+            return res.status(200).json({
+                message: 'Usuário atualizado com sucesso',
+                usuario: {
+                    id: usuario.id_usuario,
+                    nome: usuario.nome,
+                    cpf: usuario.cpf,
+                    dataNascimento: usuario.dataNascimento,
+                    fotoDePerfil: usuario.fotoDePerfil,
+                    genero: usuario.genero
+                }
+            });
+        } catch (erro: any) {
+            return res.status(400).json({
+                message: erro.message
+            });
+        }
     } catch (error) {
         console.error('Erro ao atualizar:', error);
         return res.status(400).json({
             message: 'Erro ao atualizar o usuário',
-            error: formatarErros(error)
+            error: true
         });
     }
 }
@@ -120,5 +115,6 @@ export const deletarUsuario = async (req: Request, res: Response) => {
         res.status(400).send({ message: 'Erro ao remover o usuario', error });
     }
 }
+
 
 
