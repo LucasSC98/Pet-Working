@@ -5,6 +5,7 @@ import api from "../services/api";
 import "../styles/MinhaConta.css";
 import useBodyClass from "../hooks/useBodyClass";
 import Toast from "../components/Toast";
+import EnderecoUsuario from "./EnderecoUsuario";
 
 interface DadosUsuario {
   id: number;
@@ -41,6 +42,7 @@ const MinhaConta = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [fotoAlterada, setFotoAlterada] = useState(false);
   const [mostrarNotificacao, setMostrarNotificacao] = useState(false);
+  const [showEnderecoModal, setShowEnderecoModal] = useState(false);
   
   
   useEffect(() => {
@@ -222,14 +224,16 @@ const MinhaConta = () => {
         />
         <div className="section-header">
           <h1>Minha Conta</h1>
-          {!edicaoAtiva ? (
-            <button 
-              onClick={() => setEdicaoAtiva(true)} 
-              className="btn-primary"
-            >
-              Editar Perfil
-            </button>
-          ) : null}
+          <div className="header-buttons">
+            {!edicaoAtiva && (
+              <button 
+                onClick={() => setEdicaoAtiva(true)} 
+                className="btn-primary"
+              >
+                Editar Perfil
+              </button>
+            )}
+          </div>
         </div>
         
         {mensagem.texto && (
@@ -237,6 +241,11 @@ const MinhaConta = () => {
             {mensagem.texto}
           </div>
         )}
+
+    <EnderecoUsuario 
+        isOpen={showEnderecoModal}
+        onClose={() => setShowEnderecoModal(false)}
+    />
         
         <div className="conta-content">
           <div className="perfil-foto-container">
@@ -298,9 +307,18 @@ const MinhaConta = () => {
     >
       Remover Foto Atual
     </button>
-  )}
-</div>
-          
+    
+  )}      {edicaoAtiva && (
+    <button 
+      type="button" 
+      onClick={() => setShowEnderecoModal(true)} 
+      className="btn-primary endereco-btn"
+    >
+      Endereços
+    </button>
+  )
+  }
+         </div>
           <div className="perfil-dados">
             <form onSubmit={handleSubmit}>
               <div className="form-row">

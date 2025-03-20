@@ -22,27 +22,51 @@ display: grid;
   right: 10px;
   display: flex;
   gap: 8px;
-  z-index: 2;
+  z-index: 3;
 }
 
-.btn-editar, 
-.btn-deletar {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: all 0.3s ease;
+.btn-editar-pet,
+.btn-deletar-pet {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    padding: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.btn-editar {
-  background-color: #026a6e;
-  color: white;
+.btn-editar-pet {
+    color: #026a6e;
 }
 
-.btn-editar:hover {
-  background-color: #015457;
-  transform: scale(1.1);
+.btn-deletar-pet {
+    color: #dc3545;
+}
+
+.btn-editar-pet:hover {
+    background-color: #e6f3f3;
+    transform: scale(1.1);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.btn-deletar-pet:hover {
+    background-color: #ffebee;
+    transform: scale(1.1);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+/* Garantindo que os SVGs dos ícones sejam visíveis */
+.btn-editar-pet svg,
+.btn-deletar-pet svg {
+    width: 18px;
+    height: 18px;
+    display: block;
 }
 
 .pet-avatar, .pet-avatar-placeholder {
@@ -77,21 +101,7 @@ display: grid;
   margin: 10px 0;
 }
 
-.btn-deletar {
-  background-color: #ff4444;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: all 0.3s ease;
-}
 
-.btn-deletar:hover {
-  background-color: #cc0000;
-  transform: scale(1.1);
-}
 
 .btn-icon {
   display: flex;
@@ -105,6 +115,27 @@ display: grid;
   transition: all 0.3s ease;
   backdrop-filter: blur(2px);
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  background-color: white; /* Adicionando cor de fundo explícita */
+}
+
+.btn-editar svg {
+  color: #026a6e; /* Cor do ícone de edição */
+}
+
+.btn-deletar svg {
+  color: #dc3545; /* Cor do ícone de exclusão */
+}
+
+.btn-icon:hover {
+  background-color: #f5f5f5; /* Cor de hover */
+}
+
+.btn-editar:hover svg {
+  color: #015457; /* Cor mais escura no hover */
+}
+
+.btn-deletar:hover svg {
+  color: #c82333; /* Cor mais escura no hover */
 }
 
 .pet-info {

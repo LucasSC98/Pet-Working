@@ -82,18 +82,19 @@ const CadastroPet = ({ onClose, onPetAdded, petParaEditar, modo = 'cadastro' }: 
     const handleClose = () => {
         const overlay = document.querySelector('.cadastro-pet-overlay');
         if (overlay) {
+            overlay.classList.remove('sliding-in');
             overlay.classList.add('sliding-out');
             setTimeout(() => {
                 setIsVisible(false);
                 onClose();
-            }, 300); // tempo igual ao da transição no CSS
+            }, 300);
         }
     };
 
     if (!isVisible) return null;
 
     return (
-        <div className={`cadastro-pet-overlay sliding-in`}>
+        <div className={`cadastro-pet-overlay ${isVisible ? 'sliding-in' : 'sliding-out'}`}>
             <Toast 
                 message={mensagemNotificacao}
                 type={tipoNotificacao}
@@ -104,10 +105,11 @@ const CadastroPet = ({ onClose, onPetAdded, petParaEditar, modo = 'cadastro' }: 
                 <button 
                     onClick={handleClose}
                     className="close-button"
+                    type="button"
                 >
-                    X
+                    x
                 </button>
-                <h1>{modo === 'edicao' ? 'Editar Pet' : 'Cadastrar Novo Pet'}</h1>
+                <h1>{modo === 'edicao' ? 'Editar Pet' : 'Cadastrar Pet'}</h1>
                 <form onSubmit={handleSubmit}>
                     <Input
                         label="Nome:"

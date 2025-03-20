@@ -81,12 +81,6 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               </Link>
             </li>
             <li>
-              <Link to="/historico" className={isActive("/historico") ? "active" : ""}>
-                <span className="nav-icon">📋</span>
-                Histórico
-              </Link>
-            </li>
-            <li>
               <Link to="/configuracoes" className={isActive("/configuracoes") ? "active" : ""}>
                 <span className="nav-icon">⚙️</span>
                 Configurações

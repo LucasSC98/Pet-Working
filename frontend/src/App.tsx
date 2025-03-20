@@ -12,7 +12,13 @@ import Dashboard from "./pages/Dashboard";
 import Agendamentos from "./pages/Agendamentos";
 import MeusPets from "./pages/MeusPets";
 import MinhaConta from "./pages/MinhaConta";
+import Servicos from "./pages/Servicos";
 import { AuthProvider } from "./context/AuthContext";
+import Configuracoes from "./pages/Configuracoes";
+import { ErrorProvider } from './contexts/ErrorContext';
+import { GlobalErros } from './components/GlobalErros';
+import NovoAgendamento from "./pages/NovoAgendamento";
+
 
 
 const BodyClassHandler = () => {
@@ -42,6 +48,11 @@ function AppContent() {
         <Route path="/agendamentos" element={<Agendamentos />} />
         <Route path="/pets" element={<MeusPets />} />
         <Route path="/minha-conta" element={<MinhaConta />} />
+        <Route path="/servicos" element={<Servicos />} />
+        <Route path="/configuracoes" element={<Configuracoes />} />
+        <Route path="/novo-agendamento" element={<NovoAgendamento onClose={function (): void {
+          throw new Error("Function not implemented.");
+        } } isOpen={false} />} />
       </Routes>
     </>
   );
@@ -51,7 +62,10 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <AppContent />
+        <ErrorProvider>
+          <GlobalErros />
+          <AppContent />
+        </ErrorProvider>
       </AuthProvider>
     </Router>
   );

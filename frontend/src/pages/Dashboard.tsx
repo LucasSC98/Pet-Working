@@ -33,7 +33,7 @@ const Dashboard = () => {
   const { user } = useAuth();
   const [pets, setPets] = useState<Pet[]>([]);
   const [agendamentos] = useState<Agendamento[]>([]);
-  const [loading, setLoading] = useState(true); // Alterado para true
+  const [loading, setLoading] = useState(false); // Alterado para true
 
   const fetchPets = async () => {
     if (!user) return;

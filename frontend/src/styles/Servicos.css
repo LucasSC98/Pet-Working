@@ -1,0 +1,58 @@
+.servicos-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.servico-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.2s;
+  max-width: 250px;
+}
+
+.servico-card:hover {
+  transform: translateY(-5px);
+}
+
+.servico-card-info {
+  padding: 0.8rem;
+}
+
+.servico-card-info img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.servico-card-info h3 {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+
+.servico-card-info p {
+  font-size: 0.9rem;
+  margin: 0.3rem 0;
+  color: #666;
+}
+
+.servico-card-actions {
+  padding: 0.8rem;
+  border-top: 1px solid #eee;
+}
+
+.btn-detalhes {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: #fff;
+  background-color: #026a6e;
+  border-radius: 4px;
+  width: 100%;
+  text-align: center;
+}

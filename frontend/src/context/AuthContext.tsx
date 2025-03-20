@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 interface Usuario {
-  id_usuario: number;
+  id: number;
   nome: string;
   email: string;
   fotoDePerfil?: string;

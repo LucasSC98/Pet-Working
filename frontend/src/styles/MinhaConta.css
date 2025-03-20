@@ -9,6 +9,11 @@
   margin-bottom: 2rem;
 }
 
+.header-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
 .section-header h1 {
   margin: 0;
   color: var(--primary-color);
@@ -47,6 +52,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.endereco-btn {
+  margin-top: 4rem;
+  width: 100%;
 }
 
 .perfil-foto {
@@ -243,7 +253,7 @@
 
 .btn-primary {
   padding: 0.75rem 1.5rem;
-  background-color: var(--primary-color);
+  background-color: #026a6e;
   color: white;
   border: none;
   border-radius: 4px;
@@ -252,7 +262,7 @@
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-dark);
+  background-color: #015457;
 }
 
 .btn-primary:disabled {

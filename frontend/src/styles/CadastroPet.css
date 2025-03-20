@@ -102,6 +102,38 @@
     border-color: #d0d0d0;
 }
 
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    padding: 20px;    
+    background-color: #ffffff;
+    border-radius: 50%;
+    font-size: 20px;
+    color: #026a6e;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+    z-index: 1001;
+}
+
+.close-button::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    bottom: -10px;
+    left: -10px;
+    cursor: pointer;
+}
+.close-button:hover {
+    color: white;
+    transform: scale(1.1);
+}
 
 @media (max-width: 600px) {
     .cadastro-pet-container {

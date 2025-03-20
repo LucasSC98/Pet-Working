@@ -6,7 +6,7 @@ import { useAuth } from "../hooks/useAuth";
 import "../styles/MeusPets.css";
 import CadastroPet from "./CadastroPet";
 import Toast from "../components/Toast";
-import { Pencil, Trash2 } from 'lucide-react';
+import { Pencil, Trash } from "lucide-react";
 import TelaConfirmacao from '../components/TelaConfirmacao';
 
 interface Pet {
@@ -79,6 +79,7 @@ const MeusPets = () => {
 
   useEffect(() => {
     petsAdicionados();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   if (loading) {
@@ -137,17 +138,17 @@ const MeusPets = () => {
                 <div className="pet-actions">
                   <button 
                     onClick={() => handleEditarPet(pet)}
-                    className="btn-icon btn-editar"
+                    className="btn-editar-pet"
                     title="Editar Pet"
                   >
                     <Pencil size={18} />
                   </button>
                   <button 
                     onClick={() => handleDeletarClick(pet)}
-                    className="btn-icon btn-deletar"
+                    className="btn-deletar-pet"
                     title="Exluir Pet"
                   >
-                    <Trash2 size={18} />
+                    <Trash size={18} />
                   </button>
                 </div>
                 {pet.foto && (
