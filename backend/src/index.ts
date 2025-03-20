@@ -6,6 +6,7 @@ import rotausuarios from './rotas/usuariosRota'
 import rotapets from './rotas/petsRotas'
 import agendamentorota from './rotas/agendamentosRota'
 import servicorota from './rotas/servicosRota'
+import enderecoRota from './rotas/enderecoRotas'
 import chalk from 'chalk'
 
 const app = express()
@@ -23,6 +24,7 @@ app.use(rotausuarios)
 app.use(rotapets)
 app.use(agendamentorota)
 app.use(servicorota)
+app.use(enderecoRota)
 
 async function iniciarAplicacao() {
     await sequelize.authenticate()

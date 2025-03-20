@@ -19,7 +19,7 @@ ServicoModelo.init({
         }
     },
     nome: {
-        type: DataTypes.ENUM('Banho', 'Tosa', 'Vacina', 'Cirurgia', 'Consulta', 'Exame', 'Internação', 'Hospedagem'),
+        type: DataTypes.STRING,
         allowNull: false
     },
     descricao: {
@@ -33,6 +33,11 @@ ServicoModelo.init({
             min: 0,
             isDecimal: true
         }
+    },
+
+    fotoServico: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 }, {
     sequelize,

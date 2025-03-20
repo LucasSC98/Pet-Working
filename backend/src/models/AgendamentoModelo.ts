@@ -60,4 +60,6 @@ AgendamentoModelo.init({
     timestamps: false
 })
 
+
+
 export default AgendamentoModelo;
