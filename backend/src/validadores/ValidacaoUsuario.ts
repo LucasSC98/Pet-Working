@@ -16,7 +16,7 @@ export function validarCPF(value: string) {
 }
 
 export function validarEmail(value: string)  : boolean  {
-    const emailFormato = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i
+    const emailFormato = /^[a-z0-9._]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i
    
     return emailFormato.test(value)
 }
