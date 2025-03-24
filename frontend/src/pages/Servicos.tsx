@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useBodyClass from "../hooks/useBodyClass";
 import DashboardLayout from "../components/DashboardLayout";
 import api from "../services/api";
@@ -19,6 +19,7 @@ const Servicos = () => {
   useBodyClass("dashboard-page");
   const [servicos, setServicos] = useState<Servicos[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const buscarServicos = async () => {
@@ -34,6 +35,16 @@ const Servicos = () => {
 
     buscarServicos();
   }, []);
+
+  const handleAgendarServico = (servicoId: number) => {
+    // Navega para a página de agendamentos com o ID do serviço como state
+    navigate('/agendamentos', { 
+      state: { 
+        novoAgendamento: true,
+        servicoId: servicoId 
+      } 
+    });
+  };
 
   if (loading) {
     return <div className="loading">Carregando serviços...</div>;
@@ -60,7 +71,12 @@ const Servicos = () => {
                 <p>R$ {servico.preco.toFixed(2)}</p>
               </div>
               <div className="servico-card-actions">
-                <Link to={`/servicos/${servico.id_servico}`} className="btn-detalhes">Ver detalhes</Link>
+                <button 
+                  onClick={() => handleAgendarServico(servico.id_servico)}
+                  className="btn-detalhes"
+                >
+                  Agendar Serviço
+                </button>
               </div>
             </div>
           ))}
@@ -74,4 +90,3 @@ export default Servicos;
 
 
 
-    

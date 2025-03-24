@@ -1,5 +1,5 @@
 .pets-list {
-display: grid;
+  display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
   padding: 20px;
@@ -8,12 +8,18 @@ display: grid;
 .pet-card {
   position: relative;
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
   display: flex;
   align-items: start;
   gap: 15px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.pet-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .pet-actions {
@@ -27,61 +33,58 @@ display: grid;
 
 .btn-editar-pet,
 .btn-deletar-pet {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border: none;
-    border-radius: 50%;
-    padding: 6px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  padding: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .btn-editar-pet {
-    color: #026a6e;
+  color: #026a6e;
 }
 
 .btn-deletar-pet {
-    color: #dc3545;
+  color: #dc3545;
 }
 
 .btn-editar-pet:hover {
-    background-color: #e6f3f3;
-    transform: scale(1.1);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+  background-color: #e6f3f3;
+  transform: scale(1.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .btn-deletar-pet:hover {
-    background-color: #ffebee;
-    transform: scale(1.1);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+  background-color: #ffebee;
+  transform: scale(1.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Garantindo que os SVGs dos ícones sejam visíveis */
 .btn-editar-pet svg,
 .btn-deletar-pet svg {
-    width: 18px;
-    height: 18px;
-    display: block;
+  width: 20px;
+  height: 20px;
+  display: block;
 }
 
-.pet-avatar, .pet-avatar-placeholder {
+.pet-avatar,
+.pet-avatar-placeholder {
   width: 100px;
   height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
+  object-fit: contain;
+  background-color: #fff;
+  border-radius: 8px;
 }
 
 .pet-avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 8px;
-  object-fit: cover;
-  z-index: 0;
+  border: 2px solid #ddd;
 }
 
 .pet-avatar-placeholder {
@@ -95,51 +98,49 @@ display: grid;
 
 .error-message {
   color: #d32f2f;
-  padding: 10px;
-  border-radius: 4px;
+  padding: 12px;
+  border-radius: 6px;
   background-color: #ffebee;
   margin: 10px 0;
+  text-align: center;
 }
-
-
 
 .btn-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border: none;
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.3s ease;
-  backdrop-filter: blur(2px);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  background-color: white; /* Adicionando cor de fundo explícita */
+  backdrop-filter: blur(3px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  background-color: white;
 }
 
 .btn-editar svg {
-  color: #026a6e; /* Cor do ícone de edição */
+  color: #026a6e;
 }
 
 .btn-deletar svg {
-  color: #dc3545; /* Cor do ícone de exclusão */
+  color: #dc3545;
 }
 
 .btn-icon:hover {
-  background-color: #f5f5f5; /* Cor de hover */
+  background-color: #f5f5f5;
 }
 
 .btn-editar:hover svg {
-  color: #015457; /* Cor mais escura no hover */
+  color: #015457;
 }
 
 .btn-deletar:hover svg {
-  color: #c82333; /* Cor mais escura no hover */
+  color: #c82333;
 }
 
 .pet-info {
   flex: 1;
   z-index: 1;
 }
-

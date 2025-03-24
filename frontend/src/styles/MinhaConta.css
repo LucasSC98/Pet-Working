@@ -75,7 +75,7 @@
 .foto-usuario {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .foto-placeholder {
@@ -206,7 +206,7 @@
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  transition: .4s;
+  transition: 0.4s;
   border-radius: 34px;
 }
 
@@ -218,7 +218,7 @@
   left: 3px;
   bottom: 3px;
   background-color: white;
-  transition: .4s;
+  transition: 0.4s;
   border-radius: 50%;
 }
 
@@ -284,11 +284,11 @@
   .conta-content {
     grid-template-columns: 1fr;
   }
-  
+
   .perfil-foto-container {
     margin-bottom: 2rem;
   }
-  
+
   .form-row {
     grid-template-columns: 1fr;
   }

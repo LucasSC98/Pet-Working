@@ -212,6 +212,8 @@ h1 {
 .logo-image {
   max-width: 200px;
   height: auto;
+  width: 50%;
+
 }
 
 .hero-section {

@@ -1,130 +1,248 @@
-.endereco-container {
-    padding: 20px;
+/* Variáveis para consistência */
+:root {
+  --primary-color: #026a6e;
+  --primary-light: rgba(2, 106, 110, 0.1);
+  --accent-color: #ff9800;
+  --danger-color: #dc3545;
+  --white: #ffffff;
+  --gray-light: #f8f9fa;
+  --gray-medium: #e9ecef;
+  --border-color: #dee2e6;
+  --text-primary: #343a40;
+  --text-secondary: #6c757d;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --border-radius: 6px;
+  --transition: all 0.3s ease;
 }
 
+/* Container principal */
+.endereco-container {
+  padding: 20px;
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Formulário */
 .endereco-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  background-color: var(--gray-light);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  margin-bottom: 24px;
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .form-group label {
-    font-weight: 500;
-    color: #026a6e;
+  font-weight: 600;
+  color: var(--primary-color);
+  font-size: 14px;
 }
 
 .form-group input {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 14px;
+  transition: var(--transition);
 }
 
 .form-group input:focus {
-    border-color: #026a6e;
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(2, 106, 110, 0.1);
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--primary-light);
 }
 
 .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
+/* Botões */
 .btn-adicionar {
-    background-color: #026a6e;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    margin-bottom: 20px;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: 1px solid transparent;
+  padding: 12px 24px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: var(--transition);
+  margin-bottom: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-adicionar:hover {
+  background-color: var(--white);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-cancelar {
-    padding: 8px 16px;
-    background-color: #e0e0e0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 13px;
+  min-width: 80px;
+  text-align: center;
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  transition: all 0.3s ease-in-out;
+  background-color: var(--danger-color);
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .btn-salvar {
-    padding: 8px 16px;
-    background-color: #026a6e;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
+  padding: 8px 16px;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: 1px solid transparent;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: var(--transition);
+  min-width: 90px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.btn-adicionar:hover,
 .btn-salvar:hover {
-    background-color: #015457;
+  background-color: var(--white);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-cancelar:hover {
-    background-color: #d0d0d0;
+  background-color: var(--danger-color);
+  color: var(--white);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid black;
+  box-shadow: var(--shadow-sm);
 }
 
+/* Lista de endereços */
 .enderecos-lista {
-    margin-bottom: 2rem;
-    max-height: 200px;
-    overflow-y: auto;
+  margin-bottom: 2rem;
+  max-height: 400px;
+  overflow-y: auto;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  background-color: var(--white);
+  box-shadow: var(--shadow-sm);
+  padding: 8px;
 }
 
 .endereco-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  margin-bottom: 12px;
+  background-color: var(--gray-light);
+  transition: var(--transition);
+}
+
+.endereco-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.endereco-info {
+  flex: 1;
 }
 
 .endereco-info p {
-    margin: 0.25rem 0;
+  margin: 0.35rem 0;
+  color: var(--text-primary);
+}
+
+.endereco-info p:first-child {
+  font-weight: 600;
+  color: var(--primary-color);
 }
 
 .endereco-acoes {
-    display: flex;
-    gap: 0.5rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Botões de ícone */
+.btn-editar,
+.btn-deletar {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
 }
 
 .btn-editar {
-    background-color: #026a6e;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
+  color: var(--primary-color);
 }
 
 .btn-deletar {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
+  color: var(--danger-color);
 }
 
 .btn-editar:hover {
-    background-color: #015457;
+  background-color: var(--primary-light);
+  transform: scale(1.1);
 }
 
 .btn-deletar:hover {
-    background-color: #c82333;
+  background-color: rgba(220, 53, 69, 0.1);
+  transform: scale(1.1);
+}
+
+/* Estilos para os ícones - adicione classes específicas para os ícones se necessário */
+.btn-editar i,
+.btn-deletar i {
+  font-size: 18px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .endereco-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .endereco-acoes {
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 12px;
+  }
 }

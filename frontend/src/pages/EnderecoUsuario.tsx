@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 import api from '../services/api';
 import Toast from '../components/Toast';
 import '../styles/EnderecoUsuario.css';
+import { Pencil, Trash } from 'lucide-react';
 
 interface Endereco {
     id_endereco?: number;
@@ -49,6 +50,7 @@ export const EnderecoUsuario = ({ isOpen, onClose }: EnderecoUsuarioProps) => {
         if (isOpen && user?.id) {
             buscarEnderecos();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen, user?.id]);
 
     const [showToast, setShowToast] = useState(false);
@@ -209,14 +211,16 @@ export const EnderecoUsuario = ({ isOpen, onClose }: EnderecoUsuarioProps) => {
                                 <button 
                                     onClick={() => handleEdit(endereco)}
                                     className="btn-editar"
+                                    title="Editar Endereço"
                                 >
-                                    Editar
+                                    <Pencil size={20} />
                                 </button>
                                 <button 
                                     onClick={() => handleDelete(endereco.id_endereco!)}
                                     className="btn-deletar"
+                                    title="Excluir Endereço"
                                 >
-                                    Excluir
+                                    <Trash size={20} />
                                 </button>
                             </div>
                         </div>

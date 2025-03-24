@@ -5,11 +5,15 @@ import useBodyClass from "../hooks/useBodyClass";
 import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
+import Toast from "../components/Toast";
+import { useAuth } from "../hooks/useAuth";
+import { ApiError } from "../types/erros";
 
 function Cadastro() {
   useBodyClass("cadastro-page");
 
   const navigation = useNavigate();
+  const { signIn } = useAuth();
 
   const [formData, setFormData] = useState({
     nome: "",
@@ -22,9 +26,10 @@ function Cadastro() {
     fotoDePerfil: "",
   });
 
-  const [erro, setErro] = useState("");
-  const [sucesso, setSucesso] = useState(false);
   const [carregando, setCarregando] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
+  const [toastType, setToastType] = useState<"successo" | "erro">("erro");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -38,10 +43,22 @@ function Cadastro() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setErro("");
 
     if (formData.senha !== formData.confirmarSenha) {
-      setErro("As senhas não coincidem");
+      setToastType("erro");
+      setToastMessage("As senhas não coincidem");
+      setShowToast(true);
+      return;
+    }
+    const hoje = new Date();
+    const dataNascimento = new Date(formData.dataNascimento);
+    const idade = hoje.getFullYear() - dataNascimento.getFullYear();
+    const mesAtual = hoje.getMonth() - dataNascimento.getMonth();
+
+    if (idade < 18 || (idade === 18 && mesAtual < 0)) {
+      setToastType("erro");
+      setToastMessage("É necessário ter mais de 18 anos para se cadastrar");
+      setShowToast(true);
       return;
     }
 
@@ -57,26 +74,45 @@ function Cadastro() {
         genero: formData.genero,
         fotoDePerfil: formData.fotoDePerfil || "",
       });
-      console.log("Resposta recebida:", response.status);
-      const data = response.data;
-      console.log("Dados recebidos:", data);
 
-      if (response.status !== 200 && response.status !== 201) {
-        throw new Error(data.message || "Erro ao cadastrar usuário");
+      if (response.status === 201) {
+        setToastType("successo");
+        setToastMessage("Cadastro realizado com sucesso! Fazendo login...");
+        setShowToast(true);
+
+        try {
+          // vai fazer login automaticamente e redirecionar para a dashboard
+          await signIn(formData.email, formData.senha);
+        } catch (loginError) {
+          console.error("Erro ao fazer login automático:", loginError);
+          setToastType("erro");
+          setToastMessage(
+            "Cadastro realizado, mas não foi possível fazer login automático. Redirecionando..."
+          );
+          setShowToast(true);
+          setTimeout(() => {
+            navigation("/login");
+          }, 2000);
+        }
+      }
+    } catch (error) {
+      console.error("Erro no cadastro:", error);
+      let mensagemErro = "Erro ao realizar cadastro";
+      if (error instanceof Error && "response" in error) {
+        const apiError = error as ApiError;
+        switch (apiError.response.status) {
+          case 400:
+            mensagemErro = apiError.response.data.message;
+            break;
+          default:
+            mensagemErro =
+              apiError.response.data.message || "Erro ao cadastrar";
+        }
       }
 
-      setSucesso(true);
-
-      setTimeout(() => {
-        navigation("/dashboard");
-      }, 2000);
-    } catch (error: unknown) {
-      console.error("Erro no cadastro:", error);
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : "Ocorreu um erro durante o cadastro";
-      setErro(errorMessage);
+      setToastType("erro");
+      setToastMessage(mensagemErro);
+      setShowToast(true);
     } finally {
       setCarregando(false);
     }
@@ -84,9 +120,14 @@ function Cadastro() {
 
   return (
     <>
+      <Toast
+        message={toastMessage}
+        type={toastType}
+        show={showToast}
+        onClose={() => setShowToast(false)}
+      />
       <div className="wrapper-cadastro">
-        <div className="logo-container">
-        </div>
+        <div className="logo-container"></div>
         <form onSubmit={handleSubmit} method="post">
           <Card loginLogo="Cadastro"></Card>
 
@@ -173,12 +214,6 @@ function Cadastro() {
               <option value="outro">Outro</option>
             </select>
           </div>
-          {erro && <div className="erro-mensagem">{erro}</div>}
-          {sucesso && (
-            <div className="sucesso-mensagem">
-              Cadastro realizado com sucesso! Redirecionando...
-            </div>
-          )}
           <button
             className="button-cadastro"
             type="submit"
@@ -194,7 +229,10 @@ function Cadastro() {
           <div className="link-login">
             <p>
               Já possui uma conta?{" "}
-              <a style={{ cursor: "pointer" }} onClick={() => navigation("/login")}>
+              <a
+                style={{ cursor: "pointer" }}
+                onClick={() => navigation("/login")}
+              >
                 Faça seu login aqui!
               </a>{" "}
             </p>

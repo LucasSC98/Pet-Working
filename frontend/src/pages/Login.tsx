@@ -17,10 +17,9 @@ function Login() {
     senha: "",
   });
 
-  const [erro, setErro] = useState("");
   const [carregando, setCarregando] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -30,15 +29,13 @@ function Login() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setErro("");
     setCarregando(true);
 
     try {
       await signIn(formData.email, formData.senha);
       navigation("/dashboard");
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : "Ocorreu um erro durante o login";
-      setErro(errorMessage);
+      console.error("Erro ao realizar login:", error);
     } finally {
       setCarregando(false);
     }
@@ -83,7 +80,6 @@ function Login() {
               Lembrar-me
             </label>
           </div>
-          {erro && <div className="erro-mensagem">{erro}</div>}
 
           <button type="submit" className="button" disabled={carregando}>
             {carregando ? "Entrando..." : "Login"}

@@ -7,8 +7,10 @@ type InputProps = {
   value: string;
   placeholder?: string;
   textColor?: string;
-  required?: boolean;  
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement >) => void;
+  required?: boolean;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
   options?: { value: string; label: string }[];
 };
 
@@ -21,7 +23,7 @@ const Input = ({
   textColor,
   required = false,
   onChange,
-  options
+  options,
 }: InputProps) => {
   return (
     <div className="input-box">
@@ -49,7 +51,7 @@ const Input = ({
           onChange={onChange}
           placeholder={placeholder}
           style={{ color: textColor }}
-          required = {required}
+          required={required}
         />
       )}
     </div>
