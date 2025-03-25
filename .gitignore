@@ -1,0 +1,26 @@
+# Dependencies
+**/node_modules
+**/.pnp
+**/.pnp.js
+
+# Build
+**/build
+**/dist
+
+# Misc
+**/.DS_Store
+**/.env*
+
+# Package locks (opcional)
+**/package-lock.json
+
+# Arquivos grandes
+**/*.zip
+**/*.jpg
+**/*.jpeg
+**/*.png
+!src/assets/*.png
+
+# IDEs
+**/.vscode
+**/.idea
