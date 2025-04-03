@@ -15,21 +15,20 @@ import MinhaConta from "./pages/MinhaConta";
 import Servicos from "./pages/Servicos";
 import { AuthProvider } from "./context/AuthContext";
 import Configuracoes from "./pages/Configuracoes";
-import { ErrorProvider } from './contexts/ErrorContext';
-import { GlobalErros } from './components/GlobalErros';
+import PaginaNaoEncontrada from "./pages/PaginaNãoEncontrada";
+import { ErrorProvider } from "./contexts/ErrorContext";
+import { GlobalErros } from "./components/GlobalErros";
 import NovoAgendamento from "./pages/NovoAgendamento";
-
-
 
 const BodyClassHandler = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const path = location.pathname.replace("/", ""); 
-    document.body.className = path || "login"; 
+    const path = location.pathname.replace("/", "");
+    document.body.className = path || "login";
 
     return () => {
-      document.body.className = ""; 
+      document.body.className = "";
     };
   }, [location]);
 
@@ -50,9 +49,18 @@ function AppContent() {
         <Route path="/minha-conta" element={<MinhaConta />} />
         <Route path="/servicos" element={<Servicos />} />
         <Route path="/configuracoes" element={<Configuracoes />} />
-        <Route path="/novo-agendamento" element={<NovoAgendamento onClose={function (): void {
-          throw new Error("Function not implemented.");
-        } } isOpen={false} />} />
+        <Route path="/*" element={<PaginaNaoEncontrada />} />
+        <Route
+          path="/novo-agendamento"
+          element={
+            <NovoAgendamento
+              onClose={function (): void {
+                throw new Error("Ainda não implementado");
+              }}
+              isOpen={false}
+            />
+          }
+        />
       </Routes>
     </>
   );

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
 :root {
   --primary: #026a6e;
   --primary-dark: #015558;
@@ -36,6 +38,8 @@
   --transition-fast: 150ms ease;
   --transition: 200ms ease;
   --transition-slow: 300ms ease;
+  --fonte-primaria: "Poppins", sans-serif;
+  --fonte-secundaria: "Inter", sans-serif;
 }
 
 /* Layout */
@@ -122,6 +126,7 @@
   text-decoration: none;
   color: var(--primary);
   transition: color var(--transition-fast);
+  font-family: var(--fonte-primaria);
 }
 .user-name:hover {
   color: var(--primary-dark);
@@ -152,7 +157,9 @@
   text-decoration: none;
   transition: all var(--transition);
   border-radius: var(--radius);
+  font-family: var(--fonte-primaria);
 }
+
 .sidebar-nav a:hover {
   background: var(--primary-bg);
   color: var(--primary);
@@ -230,7 +237,7 @@
 .menu-toggle:hover {
   background: var(--bg-light);
 }
-.mobile-header h1 {
+.mobile-header {
   margin: 0;
   font-size: 1.25rem;
   color: var(--primary);
@@ -321,6 +328,7 @@
 .section-header h2 {
   margin: 0;
   font-size: 1.25rem;
+  font-family: var(--fonte-primaria);
 }
 .view-all {
   color: var(--primary);
@@ -333,7 +341,6 @@
   text-decoration: underline;
 }
 
-/* Summary Cards */
 .summary-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

@@ -1,0 +1,66 @@
+.pagina-nao-encontrada-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+}
+
+.pagina-nao-encontrada-conteudo {
+  text-align: center;
+  animation: aparecer 0.5s ease-in;
+}
+
+.pagina-nao-encontrada-titulo {
+  font-size: 5rem;
+  font-weight: bold;
+  color: #2d3748;
+  margin-bottom: 1rem;
+  animation: pulsar 2s infinite;
+}
+
+.pagina-nao-encontrada-texto {
+  font-size: 1.5rem;
+  color: #4a5568;
+  margin-bottom: 2rem;
+}
+
+.pagina-nao-encontrada-botao {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  background-color: #026a6e;
+  color: white;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.pagina-nao-encontrada-botao:hover {
+  border: #ff9800 2px solid;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulsar {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

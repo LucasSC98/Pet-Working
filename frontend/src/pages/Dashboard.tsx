@@ -67,8 +67,58 @@ const Dashboard = () => {
   }, [user]);
 
   const formatarData = (dataString: string) => {
-    const data = new Date(dataString);
-    return data.toLocaleDateString("pt-BR");
+    const data = new Date(dataString + "T00:00:00Z");
+    return data.toLocaleDateString("pt-BR", {
+      timeZone: "UTC",
+    });
+  };
+
+  const getProximosAgendamentos = () => {
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
+
+    return agendamentos
+      .filter((agendamento) => {
+        if (agendamento.status !== "Agendado") return false;
+        const [ano, mes, dia] = agendamento.data.split("-").map(Number);
+        const [hora, minuto] = agendamento.horario.split(":").map(Number);
+        const dataAgendamento = new Date(ano, mes - 1, dia, hora, minuto);
+
+        return dataAgendamento >= hoje;
+      })
+      .sort((primeiroAgendamento, segundoAgendamento) => {
+        const [ano, mes, dia] = primeiroAgendamento.data.split("-").map(Number);
+        const [hora, minuto] = primeiroAgendamento.horario
+          .split(":")
+          .map(Number);
+        const dataAgendamentoAtual = new Date(ano, mes - 1, dia, hora, minuto);
+
+        const [anoProximo, mesProximo, diaProximo] = segundoAgendamento.data
+          .split("-")
+          .map(Number);
+        const [horaProximo, minutoProximo] = segundoAgendamento.horario
+          .split(":")
+          .map(Number);
+        const dataProximoAgendamento = new Date(
+          anoProximo,
+          mesProximo - 1,
+          diaProximo,
+          horaProximo,
+          minutoProximo
+        );
+
+        return (
+          dataAgendamentoAtual.getTime() - dataProximoAgendamento.getTime()
+        );
+      })
+      .slice(0, 3);
+  };
+
+  const getAgendamentosAtivos = () => {
+    return agendamentos.filter(
+      (agendamento) =>
+        agendamento.status === "Agendado" || agendamento.status === "Concluido"
+    );
   };
 
   if (loading) {
@@ -91,17 +141,17 @@ const Dashboard = () => {
             <div className="summary-icon appointment-icon">📅</div>
             <div className="summary-details">
               <h3>Agendamentos</h3>
-              <p className="summary-value">{agendamentos.length}</p>
+              <p className="summary-value">{getAgendamentosAtivos().length}</p>
             </div>
           </div>
           <div className="summary-card">
             <div className="summary-icon next-appointment-icon">⏰</div>
             <div className="summary-details">
-              <h3>Próxima Consulta</h3>
+              <h3>Seu Proximo Agendamento</h3>
               <p className="summary-value">
-                {agendamentos.length > 0
-                  ? formatarData(agendamentos[0].data)
-                  : "Nenhuma"}
+                {getProximosAgendamentos().length > 0
+                  ? formatarData(getProximosAgendamentos()[0].data)
+                  : "Nenhum"}
               </p>
             </div>
           </div>
@@ -117,8 +167,8 @@ const Dashboard = () => {
         </div>
 
         <div className="agendamento-lista">
-          {agendamentos.length > 0 ? (
-            agendamentos.slice(0, 2).map((agendamento) => (
+          {getProximosAgendamentos().length > 0 ? (
+            getProximosAgendamentos().map((agendamento) => (
               <div
                 className="agendamento-card"
                 key={agendamento.id_agendamento}

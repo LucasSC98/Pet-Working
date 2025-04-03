@@ -244,6 +244,14 @@ const NovoAgendamento = ({
     }
   };
 
+  const getDataMinima = () => {
+    const hoje = new Date();
+    const ano = hoje.getFullYear();
+    const mes = String(hoje.getMonth() + 1).padStart(2, "0");
+    const dia = String(hoje.getDate() + 1).padStart(2, "0");
+    return `${ano}-${mes}-${dia}`;
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Novo Agendamento">
       <div className="novo-agendamento-container">
@@ -336,6 +344,7 @@ const NovoAgendamento = ({
                   name="data"
                   value={formData.data}
                   onChange={handleChange}
+                  min={getDataMinima()} // Adiciona a restrição de data mínima
                   required
                 />
               </div>

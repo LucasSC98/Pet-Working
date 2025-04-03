@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+:root {
+  --font-primaria: "Poppins", sans-serif;
+  --font-secundaria: "Roboto", sans-serif;
+}
 .dashboard-section {
   padding: 20px;
 }
@@ -135,9 +141,10 @@
 .agendamento-data {
   display: flex;
   flex-direction: column;
-  align-items: flex-end; /* Alinha tudo à direita */
+  align-items: flex-end;
   justify-content: space-between;
-  width: 150px; /* Largura fixa */
+  width: 150px;
+  font-family: var(--font-secundaria);
 }
 
 .agendamento-card::after {
@@ -250,8 +257,8 @@
   color: var(--bg);
 }
 
-.servico-nome {
-  color: var(--primary);
+.agendamento-servico {
+  color: #050505;
   font-weight: 600;
   transition: color 0.3s ease;
   font-size: 1.1rem;
@@ -272,4 +279,15 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+.agendamento-pet {
+  color: #3e8285;
+  font-family: var(--font-primary);
+  font-weight: 600;
+}
+
+.agendamento-preco {
+  color: #010101;
+  font-weight: bold;
+  font-family: var(--font-secundary);
 }

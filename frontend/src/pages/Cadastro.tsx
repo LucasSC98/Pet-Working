@@ -8,6 +8,9 @@ import api from "../services/api";
 import Toast from "../components/Toast";
 import { useAuth } from "../hooks/useAuth";
 import { ApiError } from "../types/erros";
+import { Eye, EyeOff, Calendar } from "lucide-react";
+import cachorro from "../assets/cachorro.png";
+import petworkingbranco from "../assets/petworking1.png";
 
 function Cadastro() {
   useBodyClass("cadastro-page");
@@ -30,6 +33,7 @@ function Cadastro() {
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [toastType, setToastType] = useState<"successo" | "erro">("erro");
+  const [mostrarSenha, setMostrarSenha] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -126,6 +130,12 @@ function Cadastro() {
         show={showToast}
         onClose={() => setShowToast(false)}
       />
+      <div className="logo-img-cadastro">
+        <img src={petworkingbranco} alt="logo" />
+      </div>
+      <div className="cachorro-img">
+        <img src={cachorro} alt="cachorro" />
+      </div>
       <div className="wrapper-cadastro">
         <div className="logo-container"></div>
         <form onSubmit={handleSubmit} method="post">
@@ -166,7 +176,7 @@ function Cadastro() {
           </div>
           <div className="input-box-cadastro">
             <input
-              type="password"
+              type={mostrarSenha ? "text" : "password"}
               name="senha"
               value={formData.senha}
               onChange={handleChange}
@@ -174,10 +184,17 @@ function Cadastro() {
               title="Digite uma senha com no mínimo 8 caracteres"
               required
             />
+            <button
+              type="button"
+              className="mostrar-senha-cadastro"
+              onClick={() => setMostrarSenha(!mostrarSenha)}
+            >
+              {mostrarSenha ? <EyeOff size={17} /> : <Eye size={17} />}
+            </button>
           </div>
           <div className="input-box-cadastro">
             <input
-              type="password"
+              type={mostrarSenha ? "text" : "password"}
               name="confirmarSenha"
               value={formData.confirmarSenha}
               onChange={handleChange}
@@ -196,6 +213,7 @@ function Cadastro() {
               title="Digite sua data de nascimento"
               required
             />
+            <Calendar size={17} className="calendario-icon" />
           </div>
 
           <div className="input-box-cadastro">

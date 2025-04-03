@@ -15,9 +15,9 @@
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
-  width: min(90%, 600px); /* Usando min() para limitar o tamanho */
-  max-height: 90vh; /* Para evitar ultrapassar a altura da tela */
-  overflow-y: auto; /* Adiciona scroll interno se o conteúdo for maior */
+  width: min(90%, 600px);
+  max-height: 90vh;
+  overflow-y: auto;
   position: relative;
   animation: modalFadeIn 0.3s ease-in-out;
 }
