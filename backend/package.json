@@ -5,7 +5,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "test": "jest --maxWorkers=1 --verbose"
   },
   "keywords": [],
   "author": "",
@@ -16,10 +17,13 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.13.4",
     "@types/sequelize": "^4.28.20",
+    "jest": "^29.7.0",
     "nodemon": "^3.1.9",
+    "ts-jest": "^29.3.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
   },
@@ -28,6 +32,7 @@
     "bcryptjs": "^3.0.2",
     "chalk": "^4.1.2",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.17.3",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.12.0",

@@ -19,7 +19,7 @@ AgendamentoModelo.init(
       primaryKey: true,
     },
     data: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
     horario: {

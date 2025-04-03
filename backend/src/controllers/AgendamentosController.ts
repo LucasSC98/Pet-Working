@@ -4,10 +4,50 @@ import {
   PetModelo,
   ServicoModelo,
 } from "../models/Relacionamento";
+import UsuarioModelo from "../models/UsuarioModelo";
 
 export const buscarTodosAgendamentos = async (req: Request, res: Response) => {
-  const agendamentos = await AgendamentoModelo.findAll();
-  res.send(agendamentos);
+  try {
+    // Pega os parâmetros de paginação da query, com valores padrão
+    const pagina = Number(req.query.pagina) || 1;
+    const limite = Number(req.query.limite) || 10;
+    const offset = (pagina - 1) * limite;
+
+    // Busca agendamentos com paginação
+    const { count, rows: agendamentos } =
+      await AgendamentoModelo.findAndCountAll({
+        limit: limite,
+        offset: offset,
+        include: [
+          {
+            model: PetModelo,
+            attributes: ["nome", "especie"],
+            include: [
+              {
+                model: UsuarioModelo,
+                attributes: ["nome", "email"],
+              },
+            ],
+          },
+        ],
+        order: [
+          ["data", "ASC"],
+          ["horario", "ASC"],
+        ],
+      });
+
+    // Retorna os dados paginados
+    res.status(200).json({
+      total: count,
+      totalPaginas: Math.ceil(count / limite),
+      paginaAtual: pagina,
+      itensPorPagina: limite,
+      agendamentos: agendamentos,
+    });
+  } catch (error) {
+    console.error("Erro ao buscar agendamentos:", error);
+    res.status(500).json({ message: "Erro ao buscar agendamentos" });
+  }
 };
 
 export const buscarAgendamentoPorId = async (req: Request, res: Response) => {
@@ -119,9 +159,10 @@ export const buscarAgendamentosPorUsuario = async (
         },
       ],
       order: [
-        ["data", "DESC"],
+        ["data", "ASC"],
         ["horario", "ASC"],
       ],
+      logging: console.log,
     });
 
     return res.json(agendamentos);
@@ -145,7 +186,6 @@ export const cancelarAgendamento = async (req: Request, res: Response) => {
       });
     }
 
-    // Atualiza o status para cancelado
     await agendamento.update({ status: "cancelado" });
 
     return res.status(200).json({
