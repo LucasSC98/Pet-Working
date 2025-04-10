@@ -71,7 +71,7 @@ PetWorking é uma aplicação web completa desenvolvida para gestão de pet shop
 
 1. Clone o repositório
 ```bash
-git clone [https://github.com/seu-usuario/petworking.git](https://github.com/Joaokenehen/Projeto-Modulo5.git)
+git clone https://github.com/Joaokenehen/Projeto-Modulo5.git
 ```
 
 2. Instale as dependências (Backend)
