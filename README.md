@@ -95,17 +95,12 @@ DB_PASSWORD=sua-senha
 DB_NAME=petworking
 ```
 
-5. Execute as migrações
-```bash
-npm run migrate
-```
-
-6. Inicie o servidor backend
+5. Inicie o servidor backend
 ```bash
 npm run dev
 ```
 
-7. Inicie o servidor frontend
+6. Inicie o servidor frontend
 ```bash
 cd frontend
 npm run dev
