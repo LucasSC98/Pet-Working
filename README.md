@@ -31,6 +31,9 @@ PetWorking é uma aplicação web completa desenvolvida para gestão de pet shop
 - Sistema de pagamento
 - Histórico de pedidos
 
+
+  ![Home](https://i.imgur.com/mW0kJ7D.png)
+
 ## 🛠️ Tecnologias Utilizadas
 
 ### Backend
