@@ -1,0 +1,297 @@
+.detalhes-agendamento {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.detalhes-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.detalhes-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Informações do Card */
+.detalhes-card .informacoes {
+  flex: 1;
+}
+
+.detalhes-card .informacoes p {
+  margin: 0.75rem 0;
+  color: #026a6e;
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+/* Estilo comum para botões */
+.btn-cancelar-agendamento,
+.btn-mudar-horario,
+.btn-excluir,
+.btn-voltar {
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 1rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.02em;
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+/* Botão Cancelar */
+.btn-cancelar-agendamento {
+  background: linear-gradient(to right, #dc3545, #e74c3c);
+  color: #fff;
+}
+
+.btn-cancelar-agendamento:hover {
+  background: linear-gradient(to right, #c82333, #d62c1a);
+  box-shadow: 0 6px 10px rgba(220, 53, 69, 0.3);
+}
+
+/* Botão Mudar Horário */
+.btn-mudar-horario {
+  background: linear-gradient(to right, #026a6e, #03888d);
+  color: #fff;
+}
+
+.btn-mudar-horario:hover {
+  background: linear-gradient(to right, #014f53, #025c60);
+  box-shadow: 0 6px 10px rgba(2, 106, 110, 0.3);
+}
+
+/* Botão Excluir */
+.btn-excluir {
+  background: linear-gradient(to right, #6c757d, #7d868f);
+  color: #fff;
+}
+
+.btn-excluir:hover {
+  background: linear-gradient(to right, #5a6268, #6c757d);
+  box-shadow: 0 6px 10px rgba(108, 117, 125, 0.3);
+}
+
+/* Botão Voltar */
+.btn-voltar {
+  background: linear-gradient(to right, #e9ecef, #dee2e6);
+  color: #343a40;
+}
+
+.btn-voltar:hover {
+  background: linear-gradient(to right, #343a40, #495057);
+  color: white;
+  box-shadow: 0 6px 10px rgba(52, 58, 64, 0.3);
+}
+
+/* Modal de edição de horário */
+.modal-editar-horario {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  width: 90%;
+  max-width: 450px;
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.modal-editar-horario h3 {
+  margin-bottom: 1.8rem;
+  font-size: 1.3rem;
+  color: #026a6e;
+  text-align: center;
+  font-weight: 600;
+}
+
+.modal-editar-horario label {
+  display: block;
+  margin-bottom: 1.2rem;
+  font-size: 1rem;
+  color: #495057;
+  font-weight: 500;
+}
+
+.modal-editar-horario input,
+.modal-editar-horario select {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  margin-top: 0.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #333;
+  transition: all 0.3s ease;
+  background-color: #f8f9fa;
+}
+
+.modal-editar-horario input:focus,
+.modal-editar-horario select:focus {
+  border-color: #026a6e;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(2, 106, 110, 0.2);
+  background-color: #fff;
+}
+
+.modal-editar-horario button {
+  margin-top: 1.5rem;
+  padding: 0.9rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-editar-horario button:first-of-type {
+  background: linear-gradient(to right, #28a745, #20c997);
+  color: #fff;
+  margin-right: 0.8rem;
+}
+
+.modal-editar-horario button:first-of-type:hover {
+  background: linear-gradient(to right, #218838, #1aa179);
+  box-shadow: 0 6px 10px rgba(40, 167, 69, 0.3);
+}
+
+.modal-editar-horario button:last-of-type {
+  background: linear-gradient(to right, #dc3545, #e74c3c);
+  color: #fff;
+}
+
+.modal-editar-horario button:last-of-type:hover {
+  background: linear-gradient(to right, #c82333, #d62c1a);
+  box-shadow: 0 6px 10px rgba(220, 53, 69, 0.3);
+}
+
+/* Foto do Pet */
+.pet-foto {
+  flex-shrink: 0;
+  margin-left: 2rem;
+  position: relative;
+}
+
+.foto-pet {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.foto-pet:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Overlay para o modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .detalhes-card {
+    flex-direction: column-reverse;
+    padding: 1.5rem;
+  }
+
+  .pet-foto {
+    margin-left: 0;
+    margin-bottom: 1.5rem;
+    align-self: center;
+  }
+
+  .foto-pet {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .detalhes-agendamento {
+    padding: 1rem;
+  }
+
+  .modal-editar-horario {
+    padding: 1.5rem;
+    width: 95%;
+  }
+
+  .modal-editar-horario h3 {
+    font-size: 1.25rem;
+  }
+
+  .modal-editar-horario button {
+    width: 100%;
+    margin-right: 0;
+    margin-top: 0.8rem;
+  }
+
+  .modal-editar-horario button:first-of-type {
+    margin-bottom: 0.5rem;
+  }
+
+  .btn-cancelar-agendamento,
+  .btn-mudar-horario,
+  .btn-excluir,
+  .btn-voltar {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+}

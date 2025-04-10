@@ -18,3 +18,98 @@
 .sintomas-textarea::placeholder {
   color: #999;
 }
+
+/* Estilo personalizado para checkbox */
+
+.checkbox-group {
+  margin-bottom: 1.2rem;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-family: var(--font-family);
+}
+
+/* Estilo do checkbox padrão */
+.checkbox-container input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+  margin-right: 10px;
+  cursor: pointer;
+  position: relative;
+  background-color: white;
+  transition: all 0.2s;
+}
+
+/* Estilo quando o checkbox está marcado */
+.checkbox-container input[type="checkbox"]:checked {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+/* Criando o símbolo de check */
+.checkbox-container input[type="checkbox"]:checked::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Estilo para o label */
+.checkbox-label {
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-right: 8px;
+  color: var(--text-color);
+}
+
+/* Informação adicional */
+.checkbox-info {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* Ao passar o mouse */
+.checkbox-container input[type="checkbox"]:hover {
+  border-color: var(--primary);
+}
+
+/* Foco para acessibilidade */
+.checkbox-container input[type="checkbox"]:focus {
+  outline: 2px solid rgba(var(--primary-rgb), 0.3);
+  outline-offset: 2px;
+}
+
+/* Adicione ao arquivo CSS existente */
+
+.form-group select[name="formaPagamento"] {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  background-color: #fff;
+  font-size: 14px;
+}
+
+.form-group select[name="formaPagamento"]:focus {
+  border-color: #026a6e;
+  outline: none;
+}
+
+.pagamento-info {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+}

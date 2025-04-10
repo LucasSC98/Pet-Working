@@ -16,9 +16,18 @@ import Servicos from "./pages/Servicos";
 import { AuthProvider } from "./context/AuthContext";
 import Configuracoes from "./pages/Configuracoes";
 import PaginaNaoEncontrada from "./pages/PaginaNãoEncontrada";
-import { ErrorProvider } from "./contexts/ErrorContext";
-import { GlobalErros } from "./components/GlobalErros";
+/* import { ErrorProvider } from "./contexts/ErrorContext";
+import { GlobalErros } from "./components/GlobalErros"; */
 import NovoAgendamento from "./pages/NovoAgendamento";
+import { RotaPrivada } from "./components/RotaPrivada";
+import DetalhesAgendamento from "./pages/DetalhesAgendamento";
+import { CarrinhoProvider } from "./context/CarrinhoContext";
+import Loja from "./pages/Loja";
+import DetalhesProduto from "./pages/DetalhesProduto";
+import Carrinho from "./pages/Carrinho";
+import Checkout from "./pages/Checkout";
+import ConfirmacaoPedido from "./pages/ConfirmacaoPedido";
+import MeusPedidos from "./pages/MeusPedidos";
 
 const BodyClassHandler = () => {
   const location = useLocation();
@@ -40,27 +49,128 @@ function AppContent() {
     <>
       <BodyClassHandler />
       <Routes>
+        {/* Rotas públicas */}
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/agendamentos" element={<Agendamentos />} />
-        <Route path="/pets" element={<MeusPets />} />
-        <Route path="/minha-conta" element={<MinhaConta />} />
-        <Route path="/servicos" element={<Servicos />} />
-        <Route path="/configuracoes" element={<Configuracoes />} />
-        <Route path="/*" element={<PaginaNaoEncontrada />} />
+
+        {/* Rotas protegidas */}
+        <Route
+          path="/dashboard"
+          element={
+            <RotaPrivada>
+              <Dashboard />
+            </RotaPrivada>
+          }
+        />
+        <Route
+          path="/agendamentos"
+          element={
+            <RotaPrivada>
+              <Agendamentos />
+            </RotaPrivada>
+          }
+        />
+        <Route
+          path="/agendamentos/:id"
+          element={
+            <RotaPrivada>
+              <DetalhesAgendamento />
+            </RotaPrivada>
+          }
+        />
+        <Route
+          path="/pets"
+          element={
+            <RotaPrivada>
+              <MeusPets />
+            </RotaPrivada>
+          }
+        />
+
+        {/* Rotas da Loja */}
+        <Route
+          path="/loja"
+          element={
+            <RotaPrivada>
+              <Loja />
+            </RotaPrivada>
+          }
+        />
+        <Route
+          path="/loja/produto/:id"
+          element={
+            <RotaPrivada>
+              <DetalhesProduto />
+            </RotaPrivada>
+          }
+        />
+        <Route
+          path="/loja/carrinho"
+          element={
+            <RotaPrivada>
+              <Carrinho />
+            </RotaPrivada>
+          }
+        />
+        <Route
+          path="/loja/checkout"
+          element={
+            <RotaPrivada>
+              <Checkout />
+            </RotaPrivada>
+          }
+        />
+        <Route
+          path="/loja/confirmacao"
+          element={
+            <RotaPrivada>
+              <ConfirmacaoPedido />
+            </RotaPrivada>
+          }
+        />
+        <Route
+          path="/loja/meus-pedidos"
+          element={
+            <RotaPrivada>
+              <MeusPedidos />
+            </RotaPrivada>
+          }
+        />
+
+        <Route
+          path="/minha-conta"
+          element={
+            <RotaPrivada>
+              <MinhaConta />
+            </RotaPrivada>
+          }
+        />
+        <Route
+          path="/servicos"
+          element={
+            <RotaPrivada>
+              <Servicos />
+            </RotaPrivada>
+          }
+        />
+        <Route
+          path="/configuracoes"
+          element={
+            <RotaPrivada>
+              <Configuracoes />
+            </RotaPrivada>
+          }
+        />
         <Route
           path="/novo-agendamento"
           element={
-            <NovoAgendamento
-              onClose={function (): void {
-                throw new Error("Ainda não implementado");
-              }}
-              isOpen={false}
-            />
+            <RotaPrivada>
+              <NovoAgendamento onClose={() => {}} isOpen={false} />
+            </RotaPrivada>
           }
         />
+        <Route path="/*" element={<PaginaNaoEncontrada />} />
       </Routes>
     </>
   );
@@ -70,10 +180,12 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <ErrorProvider>
-          <GlobalErros />
+        <CarrinhoProvider>
+          {/*         <ErrorProvider>
+          <GlobalErros /> */}
           <AppContent />
-        </ErrorProvider>
+          {/*         </ErrorProvider> */}
+        </CarrinhoProvider>
       </AuthProvider>
     </Router>
   );

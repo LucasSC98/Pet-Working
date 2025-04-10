@@ -1,63 +1,152 @@
 .servicos-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
+  gap: 1.5rem;
+  padding: 1.5rem;
 }
 
 .servico-card {
   background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  transition: transform 0.2s;
+  transition: all 0.3s ease;
   max-width: 250px;
+  position: relative;
+  border: 2px solid transparent;
 }
 
 .servico-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(2, 106, 110, 0.2);
+  border-color: #026a6e;
+}
+
+.servico-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(2, 106, 110, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+  border-radius: 8px;
+}
+
+.servico-card:hover::before {
+  opacity: 1;
 }
 
 .servico-card-info {
-  padding: 0.8rem;
+  padding: 1rem;
+  position: relative;
+  z-index: 1;
 }
 
 .servico-card-info img {
   width: 100%;
-  height: 150px;
+  height: 160px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 6px;
+  transition: transform 0.5s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.servico-card:hover .servico-card-info img {
+  transform: scale(1.05);
 }
 
 .servico-card-info h3 {
-  font-size: 1.1rem;
-  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  margin: 0.8rem 0 0.5rem;
+  color: #026a6e;
+  transition: color 0.3s ease;
+}
+
+.servico-card:hover .servico-card-info h3 {
+  color: #ff9800;
 }
 
 .servico-card-info p {
   font-size: 0.9rem;
-  margin: 0.3rem 0;
-  color: #666;
+  margin: 0.5rem 0;
+  color: #555;
+  line-height: 1.5;
 }
 
 .servico-card-actions {
-  padding: 0.8rem;
+  padding: 1rem;
   border-top: 1px solid #eee;
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.8);
+  transition: background 0.3s ease;
+}
+
+.servico-card:hover .servico-card-actions {
+  background: rgba(255, 255, 255, 1);
 }
 
 .btn-detalhes {
   display: inline-block;
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
   text-decoration: none;
   color: #fff;
   background-color: #026a6e;
-  border-radius: 4px;
+  border-radius: 6px;
   width: 100%;
   text-align: center;
   cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-detalhes::before {
+  content: "";
+  position: absolute;
+  left: -100%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.7s ease;
 }
 
 .btn-detalhes:hover {
-  border: 2px solid #ff9800;
+  background-color: #025557;
+  transform: translateY(-2px);
+  border-color: #ff9800;
+  box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
+}
+
+.btn-detalhes:hover::before {
+  left: 100%;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(2, 106, 110, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(2, 106, 110, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(2, 106, 110, 0);
+  }
+}
+
+.servico-card:hover .btn-detalhes {
+  animation: pulse 1.5s infinite;
 }

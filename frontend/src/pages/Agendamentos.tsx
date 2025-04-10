@@ -7,9 +7,8 @@ import api from "../services/api";
 import { useAuth } from "../hooks/useAuth";
 import Toast from "../components/Toast";
 import "../styles/Agendamentos.css";
-import TelaConfirmacao from "../components/TelaConfirmacao";
 
-interface Agendamento {
+export interface Agendamento {
   id_agendamento: number;
   data: string;
   horario: string;
@@ -41,10 +40,6 @@ const Agendamentos = () => {
   const [servicoSelecionado, setServicoSelecionado] = useState<
     number | undefined
   >();
-  const [showConfirmCancelar, setShowConfirmCancelar] = useState(false);
-  const [agendamentoParaCancelar, setAgendamentoParaCancelar] = useState<
-    number | null
-  >(null);
 
   useEffect(() => {
     if (state?.novoAgendamento) {
@@ -134,42 +129,6 @@ const Agendamentos = () => {
     )
     .sort(ordenarAgendamentos);
 
-  const handleCancelarClick = (idAgendamento: number) => {
-    setAgendamentoParaCancelar(idAgendamento);
-    setShowConfirmCancelar(true);
-  };
-
-  const handleConfirmarCancelamento = async () => {
-    if (!agendamentoParaCancelar) return;
-
-    try {
-      const token = localStorage.getItem("token");
-
-      const response = await api.patch(
-        `/agendamentos/${agendamentoParaCancelar}/cancelar`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      if (response.status === 200) {
-        setMensagem("Agendamento cancelado com sucesso!");
-        setTipoMensagem("successo");
-        setShowToast(true);
-        fetchAgendamentos();
-      }
-    } catch (error) {
-      console.error("Erro ao cancelar agendamento:", error);
-      setMensagem("Erro ao cancelar agendamento");
-      setTipoMensagem("erro");
-      setShowToast(true);
-    } finally {
-      setShowConfirmCancelar(false);
-      setAgendamentoParaCancelar(null);
-    }
-  };
-
   if (loading) {
     return <div className="loading">Carregando agendamentos...</div>;
   }
@@ -243,16 +202,6 @@ const Agendamentos = () => {
                   >
                     Detalhes
                   </Link>
-                  {agendamento.status !== "cancelado" && (
-                    <button
-                      className="btn-cancelar"
-                      onClick={() =>
-                        handleCancelarClick(agendamento.id_agendamento)
-                      }
-                    >
-                      Cancelar
-                    </button>
-                  )}
                 </div>
               </div>
             ))
@@ -269,17 +218,6 @@ const Agendamentos = () => {
             fetchAgendamentos(); // Atualiza a lista após criar novo agendamento
           }}
           servicoPreSelecionado={servicoSelecionado}
-        />
-
-        <TelaConfirmacao
-          aberto={showConfirmCancelar}
-          titulo="Cancelar Agendamento"
-          mensagem="Tem certeza que deseja cancelar este agendamento?"
-          onConfirmar={handleConfirmarCancelamento}
-          onCancelar={() => {
-            setShowConfirmCancelar(false);
-            setAgendamentoParaCancelar(null);
-          }}
         />
       </section>
     </DashboardLayout>

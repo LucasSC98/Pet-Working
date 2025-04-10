@@ -95,7 +95,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             mensagemErro = "Email ou senha incorretos";
             break;
           case 404:
-            mensagemErro = "Usuário não encontrado";
+            mensagemErro = "Email ou senha incorretos";
             break;
           default:
             mensagemErro =

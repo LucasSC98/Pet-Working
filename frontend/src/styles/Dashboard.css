@@ -620,3 +620,102 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Estilos para a seção de pedidos */
+.pedidos-section {
+  margin-top: 30px;
+}
+
+.pedido-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.pedido-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pedido-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.pedido-numero {
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+}
+
+.pedido-data {
+  font-size: 14px;
+  color: #666;
+}
+
+.pedido-detalhe {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.pedido-valor {
+  font-weight: 600;
+  color: #026a6e;
+  font-size: 16px;
+}
+
+.pedido-pagamento {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Estilos para os status de pedidos */
+.status {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.status.aguardando,
+.status.pendente {
+  background-color: #fff4de;
+  color: #856404;
+}
+
+.status.pago,
+.status.finalizado {
+  background-color: #dcf8f6;
+  color: #026a6e;
+}
+
+.status.processando,
+.status.preparando {
+  background-color: #e3f2fd;
+  color: #0d47a1;
+}
+
+.status.enviado {
+  background-color: #e8f5e9;
+  color: #1b5e20;
+}
+
+.status.entregue {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status.cancelado {
+  background-color: #f8d7da;
+  color: #721c24;
+}

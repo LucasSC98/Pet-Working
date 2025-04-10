@@ -1,34 +1,72 @@
 .pets-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
   padding: 20px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .pet-card {
   position: relative;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 10px;
+  background: linear-gradient(to bottom right, #ffffff, #f9feff);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(2, 106, 110, 0.08), 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 20px;
   display: flex;
   align-items: start;
-  gap: 15px;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  gap: 22px;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  min-height: 180px;
+}
+
+.pet-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to right, #026a6e, #20b2aa);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .pet-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 20px rgba(2, 106, 110, 0.12), 0 3px 6px rgba(0, 0, 0, 0.1);
+  border-color: rgba(2, 106, 110, 0.1);
+}
+
+.pet-card:hover::before {
+  opacity: 1;
 }
 
 .pet-actions {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 15px;
+  right: 15px;
   display: flex;
-  gap: 8px;
+  gap: 10px;
   z-index: 3;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.pet-card:hover .pet-actions {
+  opacity: 1;
 }
 
 .btn-editar-pet,
@@ -36,15 +74,15 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
   border: none;
   border-radius: 50%;
-  padding: 6px;
+  padding: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
   background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .btn-editar-pet {
@@ -57,79 +95,121 @@
 
 .btn-editar-pet:hover {
   background-color: #e6f3f3;
-  transform: scale(1.15);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: scale(1.15) translateY(-2px);
+  box-shadow: 0 4px 12px rgba(2, 106, 110, 0.2);
 }
 
 .btn-deletar-pet:hover {
   background-color: #ffebee;
-  transform: scale(1.15);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: scale(1.15) translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.2);
 }
 
 .btn-editar-pet svg,
 .btn-deletar-pet svg {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   display: block;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
+  transition: transform 0.2s ease;
+}
+
+.btn-editar-pet:hover svg,
+.btn-deletar-pet:hover svg {
+  transform: scale(1.1);
 }
 
 .pet-avatar,
 .pet-avatar-placeholder {
-  width: 100px;
-  height: 100px;
+  width: 130px;
+  height: 130px;
   object-fit: contain;
   background-color: #fff;
-  border-radius: 8px;
+  border-radius: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 }
 
 .pet-avatar {
-  border: 2px solid #ddd;
+  border: 2px solid #e6f3f3;
+}
+
+.pet-card:hover .pet-avatar,
+.pet-card:hover .pet-avatar-placeholder {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .pet-avatar-placeholder {
-  background-color: #e0e0e0;
+  background: linear-gradient(135deg, #f0f7f7 0%, #e0f0f0 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2em;
-  color: #666;
+  font-size: 2.5em;
+  color: #026a6e;
 }
 
 .error-message {
   color: #d32f2f;
-  padding: 12px;
-  border-radius: 6px;
+  padding: 14px;
+  border-radius: 8px;
   background-color: #ffebee;
-  margin: 10px 0;
+  margin: 12px 0;
   text-align: center;
+  box-shadow: 0 2px 8px rgba(211, 47, 47, 0.1);
+  border-left: 4px solid #d32f2f;
+  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-3px, 0, 0);
+  }
+  40%,
+  60% {
+    transform: translate3d(3px, 0, 0);
+  }
 }
 
 .btn-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(3px);
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-  background-color: white;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .btn-editar svg {
   color: #026a6e;
+  transition: color 0.2s ease;
 }
 
 .btn-deletar svg {
   color: #dc3545;
+  transition: color 0.2s ease;
 }
 
 .btn-icon:hover {
   background-color: #f5f5f5;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
 }
 
 .btn-editar:hover svg {
@@ -143,4 +223,136 @@
 .pet-info {
   flex: 1;
   z-index: 1;
+  position: relative;
+  padding: 5px 0;
+  font-size: smaller;
+}
+.pet-info::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(to right, #026a6e, transparent);
+  transition: width 0.3s ease;
+}
+
+.pet-card:hover .pet-info::after {
+  width: 80px;
+}
+
+.no-pets-message {
+  text-align: center;
+  padding: 50px;
+  margin: 25px auto;
+  max-width: 550px;
+  background-color: #f8f9fa;
+  background-image: linear-gradient(120deg, #f8f9fa 0%, #e6f3f3 100%);
+  border-radius: 16px;
+  border: 2px dashed #026a6e;
+  box-shadow: 0 5px 20px rgba(2, 106, 110, 0.08);
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 5px 20px rgba(2, 106, 110, 0.08);
+  }
+  50% {
+    box-shadow: 0 5px 25px rgba(2, 106, 110, 0.15);
+  }
+  100% {
+    box-shadow: 0 5px 20px rgba(2, 106, 110, 0.08);
+  }
+}
+
+.no-pets-message:hover {
+  transform: translateY(-5px);
+  border-style: solid;
+  animation: none;
+  box-shadow: 0 10px 30px rgba(2, 106, 110, 0.12);
+}
+
+.no-pets-message h3 {
+  color: #026a6e;
+  font-size: 1.7rem;
+  margin-bottom: 12px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.no-pets-message p {
+  color: #666;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 450px;
+  margin: 0 auto 20px;
+}
+
+.btn-cadastrar-primeiro-pet {
+  margin-top: 25px;
+  padding: 14px 32px;
+  background: linear-gradient(to right, #026a6e, #20b2aa);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(2, 106, 110, 0.2);
+}
+
+.btn-cadastrar-primeiro-pet:hover {
+  background: linear-gradient(to right, #015558, #1a9994);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(2, 106, 110, 0.25);
+}
+
+.btn-cadastrar-primeiro-pet:active {
+  transform: translateY(-1px);
+}
+
+.btn-cadastrar-pet {
+  padding: 14px 32px;
+  background: #026a6e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  margin: 1px 0;
+  box-shadow: 0 4px 12px rgba(2, 106, 110, 0.2);
+  font-family: Poppins, sans-serif;
+}
+
+.btn-cadastrar-pet:hover {
+  background: #015558;
+  transform: translateY(-3px);
+  border: #ff9800 solid 1px;
+  box-shadow: 0 6px 18px rgba(2, 106, 110, 0.25);
+}
+
+.btn-cadastrar-pet:active {
+  transform: translateY(-1px);
+}
+
+/* Adiciona um efeito de destaque quando um novo pet é adicionado */
+@keyframes highlight {
+  0% {
+    box-shadow: 0 0 0 rgba(2, 106, 110, 0);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(2, 106, 110, 0.4);
+  }
+  100% {
+    box-shadow: 0 4px 12px rgba(2, 106, 110, 0.08), 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.pet-card.new {
+  animation: highlight 1.5s ease-out;
 }

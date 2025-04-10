@@ -1,0 +1,154 @@
+.confirmacao-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+}
+
+.confirmacao-card {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  text-align: center;
+}
+
+.confirmacao-icone {
+  margin-bottom: 20px;
+}
+
+.confirmacao-card h1 {
+  margin: 0 0 12px;
+  font-size: 28px;
+  color: #026a6e;
+}
+
+.pedido-numero {
+  margin: 0 0 24px;
+  font-size: 18px;
+  color: #666;
+  font-weight: 500;
+}
+
+.confirmacao-mensagem {
+  font-size: 16px;
+  color: #444;
+  margin-bottom: 30px;
+}
+
+.etapas-container {
+  margin: 30px auto;
+  max-width: 500px;
+}
+
+.etapa {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 30px;
+  opacity: 0.5;
+}
+
+.etapa.concluida {
+  opacity: 1;
+}
+
+.etapa-icone {
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  flex-shrink: 0;
+}
+
+.etapa.concluida .etapa-icone {
+  background-color: rgba(2, 106, 110, 0.1);
+  color: #026a6e;
+}
+
+.etapa-info {
+  text-align: left;
+}
+
+.etapa-info h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  color: #333;
+}
+
+.etapa-info p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.confirmacao-acoes {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.btn-meus-pedidos {
+  background-color: #026a6e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-meus-pedidos:hover {
+  background-color: #025558;
+}
+
+.btn-continuar-comprando {
+  background-color: transparent;
+  border: 1px solid #026a6e;
+  color: #026a6e;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-continuar-comprando:hover {
+  background-color: #f0f0f0;
+}
+
+@media (max-width: 768px) {
+  .confirmacao-card {
+    padding: 20px;
+  }
+
+  .confirmacao-card h1 {
+    font-size: 22px;
+  }
+
+  .pedido-numero {
+    font-size: 16px;
+  }
+
+  .confirmacao-acoes {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-meus-pedidos,
+  .btn-continuar-comprando {
+    width: 100%;
+  }
+}

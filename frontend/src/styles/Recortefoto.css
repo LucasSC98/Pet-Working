@@ -1,0 +1,86 @@
+.crop-container {
+  margin: 15px auto;
+  max-width: 300px;
+}
+
+.crop-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.crop-button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.crop-button.save {
+  background-color: #026a6e;
+  color: white;
+}
+
+.crop-button.save:hover {
+  background-color: #015558;
+}
+
+.crop-button.cancel {
+  background-color: #dc3545;
+  color: white;
+}
+
+.crop-button.cancel:hover {
+  background-color: #c82333;
+}
+
+.crop-instruction {
+  color: #026a6e;
+  margin-top: 10px;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+.image-preview {
+  width: 200px;
+  height: 200px;
+  border: 3px solid #026a6e;
+  border-radius: 10px;
+  margin: 0 auto;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+.preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Isso fará a imagem cobrir todo o espaço mantendo a proporção */
+}
+
+.ReactCrop {
+  width: 300px !important;
+  height: 300px !important;
+  margin: 0 auto;
+}
+
+.ReactCrop > div {
+  height: 100%;
+}
+
+.ReactCrop img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* isso manterá a proporção da imagem */
+  max-height: 300px;
+}
+
+.ReactCrop__crop-selection {
+  border: 2px solid #026a6e !important;
+  border-radius: 10px;
+}

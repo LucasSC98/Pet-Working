@@ -38,6 +38,43 @@
   border-left: 4px solid #f57c00;
 }
 
+.toast.carrinho-toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-right: 16px;
+}
+
+.toast.carrinho-toast .produto-foto {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.toast.carrinho-toast .toast-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.toast.carrinho-toast .produto-nome {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.toast.carrinho-toast .mensagem-adicionado {
+  font-size: 12px;
+  color: #026a6e;
+}
+
+.toast.carrinho-toast .ver-carrinho {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #026a6e;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 @keyframes slideIn {
   from {
     transform: translateX(100%);

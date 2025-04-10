@@ -61,7 +61,9 @@ const NovoAgendamento = ({
     servicoId: servicoPreSelecionado?.toString() || "",
     data: "",
     horario: "",
-    descricaoSintomas: "", // Novo campo
+    descricaoSintomas: "",
+    precisaTransporte: false,
+    formaPagamento: "", // Nova propriedade para forma de pagamento
   });
 
   const isConsulta = (servicoId: string) => {
@@ -147,11 +149,15 @@ const NovoAgendamento = ({
       HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement
     >
   ) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target as HTMLInputElement;
+
+    // Tratamento especial para checkbox
+    const newValue =
+      type === "checkbox" ? (e.target as HTMLInputElement).checked : value;
 
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: newValue,
     }));
 
     if (name === "data") {
@@ -178,16 +184,18 @@ const NovoAgendamento = ({
       }
       if (
         !formData.petId ||
-        !formData.enderecoId ||
         !formData.servicoId ||
         !formData.data ||
-        !formData.horario
+        !formData.horario ||
+        !formData.formaPagamento ||
+        (formData.precisaTransporte && !formData.enderecoId)
       ) {
         setToastMessage("Todos os campos são obrigatórios");
         setToastType("erro");
         setShowToast(true);
         return;
       }
+
       if (
         isConsulta(formData.servicoId) &&
         !formData.descricaoSintomas.trim()
@@ -199,21 +207,25 @@ const NovoAgendamento = ({
         setShowToast(true);
         return;
       }
-
       const agendamentoData = {
         id_pet: parseInt(formData.petId),
-        id_endereco: parseInt(formData.enderecoId),
+        id_endereco: formData.precisaTransporte
+          ? parseInt(formData.enderecoId)
+          : null,
         id_servico: parseInt(formData.servicoId),
         data: formData.data,
         horario: formData.horario,
         id_usuario: user.id,
         status: "Agendado",
         descricao_sintomas: formData.descricaoSintomas || null,
+        precisa_transporte: formData.precisaTransporte === true,
+        forma_pagamento: formData.formaPagamento,
       };
 
       const response = await api.post("/agendamentos", agendamentoData, {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
       });
 
@@ -221,8 +233,6 @@ const NovoAgendamento = ({
         setToastMessage("Agendamento realizado com sucesso!");
         setToastType("successo");
         setShowToast(true);
-        isOpen = false;
-
         setFormData({
           petId: "",
           enderecoId: "",
@@ -230,6 +240,8 @@ const NovoAgendamento = ({
           data: "",
           horario: "",
           descricaoSintomas: "",
+          precisaTransporte: false,
+          formaPagamento: "",
         });
 
         setTimeout(() => {
@@ -284,26 +296,6 @@ const NovoAgendamento = ({
             </div>
 
             <div className="form-group">
-              <label>Endereço:</label>
-              <select
-                name="enderecoId"
-                value={formData.enderecoId}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Selecione um endereço</option>
-                {enderecos.map((endereco) => (
-                  <option
-                    key={endereco.id_endereco}
-                    value={endereco.id_endereco}
-                  >
-                    {endereco.rua}, {endereco.numero} - {endereco.bairro}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-group">
               <label>Serviço:</label>
               <select
                 name="servicoId"
@@ -336,6 +328,45 @@ const NovoAgendamento = ({
               </div>
             )}
 
+            {/* Novo campo - checkbox de transporte */}
+            <div className="form-group checkbox-group">
+              <label className="checkbox-container">
+                <input
+                  type="checkbox"
+                  name="precisaTransporte"
+                  checked={formData.precisaTransporte}
+                  onChange={handleChange}
+                />
+                <span className="checkbox-label">Precisa de transporte?</span>
+                <span className="checkbox-info">
+                  (Taxa adicional será cobrada)
+                </span>
+              </label>
+            </div>
+
+            {/* Endereço aparece somente se precisar de transporte */}
+            {formData.precisaTransporte && (
+              <div className="form-group">
+                <label>Endereço para buscar o pet:</label>
+                <select
+                  name="enderecoId"
+                  value={formData.enderecoId}
+                  onChange={handleChange}
+                  required={formData.precisaTransporte}
+                >
+                  <option value="">Selecione um endereço</option>
+                  {enderecos.map((endereco) => (
+                    <option
+                      key={endereco.id_endereco}
+                      value={endereco.id_endereco}
+                    >
+                      {endereco.rua}, {endereco.numero} - {endereco.bairro}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+
             <div className="form-row">
               <div className="form-group">
                 <label>Data:</label>
@@ -344,7 +375,7 @@ const NovoAgendamento = ({
                   name="data"
                   value={formData.data}
                   onChange={handleChange}
-                  min={getDataMinima()} // Adiciona a restrição de data mínima
+                  min={getDataMinima()}
                   required
                 />
               </div>
@@ -356,7 +387,7 @@ const NovoAgendamento = ({
                   value={formData.horario}
                   onChange={handleChange}
                   required
-                  disabled={!formData.data} // Desabilita se não houver data selecionada
+                  disabled={!formData.data}
                 >
                   <option value="">Selecione um horário</option>
                   {horariosDisponiveis.map(
@@ -369,6 +400,28 @@ const NovoAgendamento = ({
                   )}
                 </select>
               </div>
+            </div>
+            <div className="form-group">
+              <label>Forma de Pagamento:</label>
+              <select
+                name="formaPagamento"
+                value={formData.formaPagamento}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Selecione uma forma de pagamento</option>
+                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                <option value="Dinheiro">Dinheiro (na hora do serviço)</option>
+                <option value="PIX">PIX</option>
+              </select>
+              <p className="pagamento-info">
+                {formData.formaPagamento === "PIX" &&
+                  "As instruções de PIX serão enviadas por e-mail"}
+                {formData.formaPagamento === "Cartão de Crédito" &&
+                  "O pagamento será processado no momento da confirmação"}
+                {formData.formaPagamento === "Dinheiro" &&
+                  "Pague diretamente ao prestador de serviço"}
+              </p>
             </div>
 
             <div className="form-actions">

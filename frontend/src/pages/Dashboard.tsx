@@ -34,15 +34,32 @@ interface Servico {
   fotoServico: string;
 }
 
+interface Pedido {
+  id_pedido: number;
+  data_pedido: string;
+  valor_total: number;
+  status: string;
+  forma_pagamento: string;
+  itens?: Array<{
+    id_produto: number;
+    quantidade: number;
+    produto: {
+      nome: string;
+      foto: string;
+    };
+  }>;
+}
+
 const Dashboard = () => {
   useBodyClass("dashboard-page");
   const { user } = useAuth();
   const [pets, setPets] = useState<Pet[]>([]);
   const [agendamentos, setAgendamentos] = useState<Agendamento[]>([]);
-  const [loading, setLoading] = useState(false); // Alterado para true
-  const [servicos, setServicos] = useState<Servico[]>([]); // Novo estado
+  const [loading, setLoading] = useState(false);
+  const [servicos, setServicos] = useState<Servico[]>([]);
+  const [pedidos, setPedidos] = useState<Pedido[]>([]);
 
-  const fetchPets = async () => {
+  const fetchDados = async () => {
     if (!user) return;
     try {
       setLoading(true);
@@ -51,26 +68,48 @@ const Dashboard = () => {
         `/agendamentos/usuario/${user.id}`
       );
       const servicosResponse = await api.get("/servicos");
+
+      try {
+        const pedidosResponse = await api.get(`/pedidos/usuario/${user.id}`);
+        setPedidos(pedidosResponse.data);
+      } catch (erro) {
+        console.error("Erro ao carregar pedidos:", erro);
+        setPedidos([]);
+      }
+
       setServicos(servicosResponse.data);
       setPets(response.data);
       setAgendamentos(agendamentosResponse.data);
     } catch (error) {
-      console.error("Erro ao carregar pets:", error);
+      console.error("Erro ao carregar dados:", error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchPets();
+    fetchDados();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const formatarData = (dataString: string) => {
-    const data = new Date(dataString + "T00:00:00Z");
-    return data.toLocaleDateString("pt-BR", {
-      timeZone: "UTC",
-    });
+    if (!dataString) return "Data não disponível";
+
+    try {
+      // Tenta criar uma data a partir da string original sem modificações
+      const data = new Date(dataString);
+
+      // Verifica se a data é válida
+      if (isNaN(data.getTime())) {
+        console.warn("Data inválida:", dataString);
+        return "Data inválida";
+      }
+
+      return data.toLocaleDateString("pt-BR");
+    } catch (error) {
+      console.error("Erro ao formatar data:", error);
+      return "Erro na data";
+    }
   };
 
   const getProximosAgendamentos = () => {
@@ -144,6 +183,15 @@ const Dashboard = () => {
               <p className="summary-value">{getAgendamentosAtivos().length}</p>
             </div>
           </div>
+
+          <div className="summary-card">
+            <div className="summary-icon order-icon">🛍️</div>
+            <div className="summary-details">
+              <h3>Pedidos</h3>
+              <p className="summary-value">{pedidos.length}</p>
+            </div>
+          </div>
+
           <div className="summary-card">
             <div className="summary-icon next-appointment-icon">⏰</div>
             <div className="summary-details">
@@ -271,6 +319,49 @@ const Dashboard = () => {
           </section>
         </div>
       </div>
+
+      <section className="dashboard-section pedidos-section">
+        <div className="section-header">
+          <h2>Meus Últimos Pedidos</h2>
+          <Link to="/loja/meus-pedidos" className="view-all">
+            Ver todos
+          </Link>
+        </div>
+
+        <div className="pedido-lista">
+          {pedidos.length > 0 ? (
+            pedidos.slice(0, 2).map((pedido) => (
+              <div className="pedido-card" key={pedido.id_pedido}>
+                <div className="pedido-info">
+                  <p className="pedido-numero">Pedido #{pedido.id_pedido}</p>
+                  <p className="pedido-data">
+                    {formatarData(pedido.data_pedido)}
+                  </p>
+                </div>
+                <div className="pedido-detalhe">
+                  <span className={`status ${pedido.status.toLowerCase()}`}>
+                    {pedido.status}
+                  </span>
+                  <p className="pedido-valor">
+                    R${" "}
+                    {typeof pedido.valor_total === "number"
+                      ? pedido.valor_total.toFixed(2)
+                      : Number(pedido.valor_total).toFixed(2) || "0.00"}
+                  </p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="sem-info">Nenhum pedido encontrado</p>
+          )}
+        </div>
+
+        <div className="action-button">
+          <Link to="/loja" className="btn-primary">
+            Visitar Loja
+          </Link>
+        </div>
+      </section>
     </DashboardLayout>
   );
 };

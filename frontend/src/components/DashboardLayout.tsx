@@ -93,6 +93,21 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               </Link>
             </li>
             <li>
+              <Link to="/loja" className={isActive("/loja") ? "active" : ""}>
+                <span className="nav-icon">🛍️</span>
+                Loja Pet
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/loja/meus-pedidos"
+                className={isActive("/loja/meus-pedidos") ? "active" : ""}
+              >
+                <span className="nav-icon">🛒</span>
+                Pedidos
+              </Link>
+            </li>
+            <li>
               <Link
                 to="/configuracoes"
                 className={isActive("/configuracoes") ? "active" : ""}
