@@ -10,7 +10,7 @@ export const buscarTodosAgendamentos = async (req: Request, res: Response) => {
   try {
     // Pega os parâmetros de paginação da query, com valores padrão
     const pagina = Number(req.query.pagina) || 1;
-    const limite = Number(req.query.limite) || 10;
+    const limite = Number(req.query.limite) || 5;
     const offset = (pagina - 1) * limite;
 
     // Busca agendamentos com paginação
@@ -35,8 +35,6 @@ export const buscarTodosAgendamentos = async (req: Request, res: Response) => {
           ["horario", "ASC"],
         ],
       });
-
-    // Retorna os dados paginados
     res.status(200).json({
       total: count,
       totalPaginas: Math.ceil(count / limite),
@@ -51,8 +49,31 @@ export const buscarTodosAgendamentos = async (req: Request, res: Response) => {
 };
 
 export const buscarAgendamentoPorId = async (req: Request, res: Response) => {
-  const agendamento = await AgendamentoModelo.findByPk(req.params.id);
-  res.send(agendamento);
+  try {
+    const agendamento = await AgendamentoModelo.findByPk(req.params.id, {
+      include: [
+        {
+          model: PetModelo,
+          as: "pet",
+          attributes: ["nome", "especie", "foto"],
+        },
+        {
+          model: ServicoModelo,
+          as: "servico",
+          attributes: ["nome", "preco"],
+        },
+      ],
+    });
+
+    if (!agendamento) {
+      return res.status(404).json({ message: "Agendamento não encontrado" });
+    }
+
+    res.status(200).json(agendamento);
+  } catch (error) {
+    console.error("Erro ao buscar agendamento por ID:", error);
+    res.status(500).json({ message: "Erro ao buscar agendamento" });
+  }
 };
 
 export const criarNovoAgendamento = async (req: Request, res: Response) => {
@@ -66,32 +87,52 @@ export const criarNovoAgendamento = async (req: Request, res: Response) => {
       id_usuario,
       status,
       descricao_sintomas,
+      precisa_transporte,
+      forma_pagamento,
     } = req.body;
-
-    // Validação dos campos
     if (
       !id_pet ||
-      !id_endereco ||
       !id_servico ||
       !data ||
       !horario ||
-      !id_usuario
+      !id_usuario ||
+      !forma_pagamento
     ) {
       return res.status(400).json({
-        message: "Todos os campos são obrigatórios",
+        message: "Campos obrigatórios não fornecidos",
+        camposRecebidos: {
+          id_pet,
+          id_servico,
+          data,
+          horario,
+          id_usuario,
+          forma_pagamento,
+        },
       });
     }
 
+    // Validar se precisa de transporte e tem endereço
+    if (precisa_transporte && !id_endereco) {
+      return res.status(400).json({
+        message: "Endereço é obrigatório quando transporte é necessário",
+      });
+    }
+
+    // Convertendo explicitamente para garantir o tipo correto
     const novoAgendamento = await AgendamentoModelo.create({
       id_pet,
-      id_endereco,
+      id_endereco: precisa_transporte ? id_endereco : null,
       id_servico,
       data,
       horario,
       id_usuario,
-      status: status || "pendente",
+      status: status || "Agendado",
       descricao_sintomas,
+      precisa_transporte: Boolean(precisa_transporte), // Garantindo que é booleano
+      forma_pagamento: forma_pagamento, // Garantindo que está incluído
     });
+
+    console.log("Agendamento criado:", novoAgendamento.toJSON());
 
     res.status(201).json({
       message: "Agendamento criado com sucesso",
@@ -197,5 +238,25 @@ export const cancelarAgendamento = async (req: Request, res: Response) => {
     return res.status(500).json({
       message: "Erro ao cancelar agendamento",
     });
+  }
+};
+
+export const mudarHorarioAgendamento = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { data, horario } = req.body;
+
+    const agendamento = await AgendamentoModelo.findByPk(id);
+
+    if (!agendamento) {
+      return res.status(404).json({ message: "Agendamento não encontrado" });
+    }
+
+    await agendamento.update({ data, horario });
+
+    return res.status(200).json({ message: "Horário alterado com sucesso" });
+  } catch (error) {
+    console.error("Erro ao alterar horário do agendamento:", error);
+    return res.status(500).json({ message: "Erro ao alterar horário" });
   }
 };

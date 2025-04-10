@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+dotenv.config();
 import cors from "cors";
 import authRota from "./rotas/autenticacaoRota";
 import sequelize from "./config/database";
@@ -8,12 +9,16 @@ import rotapets from "./rotas/petsRotas";
 import agendamentorota from "./rotas/agendamentosRota";
 import servicorota from "./rotas/servicosRota";
 import enderecoRota from "./rotas/enderecoRotas";
+import produtoRota from "./rotas/produtosRota";
+import pedidoRota from "./rotas/pedidosRota";
+import pagamentoRota from "./rotas/pagamentosRota";
 import chalk from "chalk";
+import "./models/Relacionamento";
 
 const app = express();
 const port = 3000;
 
-const ambiente = process.env.NODE_ENV || "development";
+const ambiente = process.env.NODE_ENV || "test";
 
 console.log(`Iniciando servidor em ambiente: ${ambiente}`);
 
@@ -32,15 +37,18 @@ app.use(rotapets);
 app.use(agendamentorota);
 app.use(servicorota);
 app.use(enderecoRota);
+app.use(produtoRota);
+app.use(pedidoRota);
+app.use(pagamentoRota);
 
-sequelize
+/* sequelize
   .sync({ alter: true })
   .then(() => {
     console.log("database foi sincronizado com sucesso");
   })
   .catch((error) => {
     console.log("deu zica no bagulho", error);
-  });
+  }); */
 
 async function iniciarAplicacao() {
   await sequelize.authenticate();

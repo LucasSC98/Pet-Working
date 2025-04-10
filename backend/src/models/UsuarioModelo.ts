@@ -7,6 +7,7 @@ import {
   validarSenha,
   validarDataNascimento,
 } from "../validadores/ValidacaoUsuario";
+import EnderecoModelo from "./EnderecoModelo";
 
 class UsuarioModelo extends Model {
   public id_usuario!: number;

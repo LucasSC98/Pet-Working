@@ -1,6 +1,13 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
 
+// Definindo explicitamente o enum para formas de pagamento
+export enum FormaPagamento {
+  CARTAO_CREDITO = "Cartão de Crédito",
+  DINHEIRO = "Dinheiro",
+  PIX = "PIX",
+}
+
 class AgendamentoModelo extends Model {
   public id_agendamento!: number;
   public data!: Date;
@@ -9,6 +16,10 @@ class AgendamentoModelo extends Model {
   public id_pet!: number;
   public id_servico!: number;
   public status!: string;
+  public precisa_transporte!: boolean;
+  public forma_pagamento!: FormaPagamento;
+  public id_endereco?: number | null;
+  public descricao_sintomas?: string | null;
 }
 
 AgendamentoModelo.init(
@@ -64,6 +75,24 @@ AgendamentoModelo.init(
       ),
       allowNull: false,
       defaultValue: "Agendado",
+    },
+    precisa_transporte: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    forma_pagamento: {
+      type: DataTypes.ENUM(...Object.values(FormaPagamento)),
+      allowNull: false,
+      defaultValue: FormaPagamento.DINHEIRO,
+    },
+    id_endereco: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: "enderecos",
+        key: "id_endereco",
+      },
     },
   },
   {
