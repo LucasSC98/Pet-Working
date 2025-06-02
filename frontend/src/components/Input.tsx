@@ -12,6 +12,7 @@ type InputProps = {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
   options?: { value: string; label: string }[];
+  error?: string;
 };
 
 const Input = ({

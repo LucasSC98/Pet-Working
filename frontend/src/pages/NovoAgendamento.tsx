@@ -73,7 +73,8 @@ const NovoAgendamento = ({
 
   const carregarDados = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const storedUser = localStorage.getItem("@PetWorking:user");
+      const token = storedUser ? JSON.parse(storedUser).token : null;
 
       if (!token || !user) {
         setToastMessage("Usuário não autenticado");
@@ -174,7 +175,8 @@ const NovoAgendamento = ({
     e.preventDefault();
 
     try {
-      const token = localStorage.getItem("token");
+      const storedUser = localStorage.getItem("@PetWorking:user");
+      const token = storedUser ? JSON.parse(storedUser).token : null;
 
       if (!token || !user) {
         setToastMessage("Usuário não autenticado");
@@ -327,8 +329,6 @@ const NovoAgendamento = ({
                 />
               </div>
             )}
-
-            {/* Novo campo - checkbox de transporte */}
             <div className="form-group checkbox-group">
               <label className="checkbox-container">
                 <input
@@ -338,13 +338,8 @@ const NovoAgendamento = ({
                   onChange={handleChange}
                 />
                 <span className="checkbox-label">Precisa de transporte?</span>
-                <span className="checkbox-info">
-                  (Taxa adicional será cobrada)
-                </span>
               </label>
             </div>
-
-            {/* Endereço aparece somente se precisar de transporte */}
             {formData.precisaTransporte && (
               <div className="form-group">
                 <label>Endereço para buscar o pet:</label>

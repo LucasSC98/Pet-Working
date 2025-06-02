@@ -340,7 +340,6 @@
   transform: translateY(-1px);
 }
 
-/* Adiciona um efeito de destaque quando um novo pet é adicionado */
 @keyframes highlight {
   0% {
     box-shadow: 0 0 0 rgba(2, 106, 110, 0);

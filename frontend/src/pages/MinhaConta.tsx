@@ -92,11 +92,7 @@ const MinhaConta = () => {
       try {
         setMensagem({ tipo: "info", texto: "Enviando imagem..." });
         setCarregando(true);
-
-        // Upload para o Cloudinary
         const imageUrl = await uploadImagem(file, "usuarios");
-
-        // Atualizar no backend
         await api.patch(`/usuarios/${dadosUsuario.id}`, {
           fotoDePerfil: imageUrl,
         });

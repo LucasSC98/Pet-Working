@@ -9,6 +9,7 @@ import {
   buscarAgendamentosPorUsuario,
   cancelarAgendamento,
   mudarHorarioAgendamento,
+  deletarAgendamentosDoUsuario,
 } from "../controllers/AgendamentosController";
 
 const router = express.Router();
@@ -29,5 +30,10 @@ router.patch(
   verificarToken,
   mudarHorarioAgendamento
 );
+/* router.delete(
+  "/agendamentos/usuario/:id",
+  verificarToken,
+  deletarAgendamentosDoUsuario
+); */
 
 export default router;

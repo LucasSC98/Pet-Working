@@ -13,14 +13,14 @@ body.home-page {
 }
 
 body.login-page {
-  padding: 0%;
-  margin: 0%;
+  padding: 0;
+  margin: 0;
   display: flex;
   min-height: 100vh;
-  justify-content: center;
-  align-items: center;
-  background: url("assets/3.jpg");
+  flex-direction: column;
+  background: none;
   background-size: cover;
+  position: absolute;
 }
 
 body.cadastro-page {
@@ -30,7 +30,7 @@ body.cadastro-page {
   min-height: 100vh;
   justify-content: center;
   align-items: center;
-  background: url("assets/3.jpg");
+  background: none;
   background-size: cover;
 }
 

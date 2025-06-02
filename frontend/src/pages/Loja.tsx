@@ -44,12 +44,10 @@ const Loja = () => {
   const [error, setError] = useState<string | null>(null);
   const { totalItens } = useCarrinho();
 
-  // Obter parâmetros da URL
   const paginaAtual = Number(searchParams.get("pagina") || "1");
   const categoriaAtiva = searchParams.get("categoria") || "todos";
   const busca = searchParams.get("busca") || "";
 
-  // Constante com todas as categorias disponíveis
   const categorias = [
     "todos",
     "Alimentação",

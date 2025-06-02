@@ -19,8 +19,6 @@
   color: #999;
 }
 
-/* Estilo personalizado para checkbox */
-
 .checkbox-group {
   margin-bottom: 1.2rem;
 }
@@ -32,7 +30,6 @@
   font-family: var(--font-family);
 }
 
-/* Estilo do checkbox padrão */
 .checkbox-container input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
@@ -47,13 +44,11 @@
   transition: all 0.2s;
 }
 
-/* Estilo quando o checkbox está marcado */
 .checkbox-container input[type="checkbox"]:checked {
   background-color: var(--primary);
   border-color: var(--primary);
 }
 
-/* Criando o símbolo de check */
 .checkbox-container input[type="checkbox"]:checked::after {
   content: "✓";
   position: absolute;
@@ -65,7 +60,6 @@
   font-weight: bold;
 }
 
-/* Estilo para o label */
 .checkbox-label {
   font-weight: 500;
   font-size: 0.95rem;
@@ -73,25 +67,20 @@
   color: var(--text-color);
 }
 
-/* Informação adicional */
 .checkbox-info {
   font-size: 0.85rem;
   color: var(--text-secondary);
   font-style: italic;
 }
 
-/* Ao passar o mouse */
 .checkbox-container input[type="checkbox"]:hover {
   border-color: var(--primary);
 }
 
-/* Foco para acessibilidade */
 .checkbox-container input[type="checkbox"]:focus {
   outline: 2px solid rgba(var(--primary-rgb), 0.3);
   outline-offset: 2px;
 }
-
-/* Adicione ao arquivo CSS existente */
 
 .form-group select[name="formaPagamento"] {
   border: 1px solid #ccc;

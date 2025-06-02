@@ -96,10 +96,7 @@ const Dashboard = () => {
     if (!dataString) return "Data não disponível";
 
     try {
-      // Tenta criar uma data a partir da string original sem modificações
       const data = new Date(dataString);
-
-      // Verifica se a data é válida
       if (isNaN(data.getTime())) {
         console.warn("Data inválida:", dataString);
         return "Data inválida";

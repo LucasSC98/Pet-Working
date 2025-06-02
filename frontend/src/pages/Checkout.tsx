@@ -82,7 +82,6 @@ const Checkout = () => {
     try {
       setEnviando(true);
 
-      // Criar pedido
       const pedidoData = {
         id_endereco: enderecoSelecionado,
         observacoes,
@@ -95,7 +94,6 @@ const Checkout = () => {
       const responsePedido = await api.post("/pedidos", pedidoData);
 
       if (responsePedido.status === 201) {
-        // Criar pagamento
         const pagamentoData = {
           id_pedido: responsePedido.data.id_pedido,
           metodo: metodoPagamento,

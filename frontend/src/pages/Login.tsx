@@ -1,5 +1,4 @@
 import { useState, FormEvent } from "react";
-import Card from "../components/Card";
 import "../styles/Login.css";
 import Input from "../components/Input";
 import { Link } from "react-router-dom";
@@ -7,7 +6,7 @@ import useBodyClass from "../hooks/useBodyClass";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { Eye, EyeOff } from "lucide-react";
-import petworkingbranco from "../assets/petworking1.png";
+import petworkingLogo from "../assets/petrking.png";
 
 function Login() {
   useBodyClass("login-page");
@@ -48,68 +47,85 @@ function Login() {
 
   return (
     <>
-      <div className="logo-image-login">
-        <img src={petworkingbranco} />
-      </div>
-      <div className="hero-image">
-        <img
-          src="https://i.imgur.com/I3bpkum.png"
-          alt="Cachorro do login"
-          className="login-image"
-        />
-      </div>
+      <header className="header-login">
+        <div className="container-logo-login">
+          <Link to="/">
+            <img
+              src={petworkingLogo}
+              alt="PetWorking Logo"
+              className="logo-login"
+            />
+          </Link>
+        </div>
+      </header>
       <div className="wrapper-login">
-        <form onSubmit={handleSubmit}>
-          <Card loginLogo="Login"></Card>
-
-          <div className="input-box">
-            <Input
-              {...{
-                type: "email",
-                name: "email",
-                value: formData.email,
-                placeholder: "Digite seu email",
-                onChange: handleChange,
-              }}
+        <div className="login-left-side">
+          <div className="login-image-container">
+            <img
+              src="https://st4.depositphotos.com/12985790/24533/i/450/depositphotos_245332162-stock-photo-selective-focus-golden-retriever-dog.jpg"
+              alt="PetWorking"
+              className="login-image-card"
             />
           </div>
+        </div>
 
-          <div className="input-box">
-            <Input
-              {...{
-                type: mostrarSenha ? "text" : "password",
-                name: "senha",
-                value: formData.senha,
-                placeholder: "Digite sua senha",
-                onChange: handleChange,
-              }}
-            />
-            <button
-              type="button"
-              className="mostrar-senha-login"
-              onClick={() => setMostrarSenha(!mostrarSenha)}
-            >
-              {mostrarSenha ? <EyeOff size={17} /> : <Eye size={17} />}
+        {/* Lado direito - Formulário */}
+        <div className="login-right-side">
+          <h1 className="login-greeting">Login</h1>
+
+          <form className="login-form" onSubmit={handleSubmit}>
+            <div className="input-box">
+              <Input
+                {...{
+                  type: "email",
+                  name: "email",
+                  value: formData.email,
+                  placeholder: "Digite seu email",
+                  onChange: handleChange,
+                }}
+              />
+            </div>
+
+            <div className="input-box">
+              <Input
+                {...{
+                  type: mostrarSenha ? "text" : "password",
+                  name: "senha",
+                  value: formData.senha,
+                  placeholder: "Digite sua senha",
+                  onChange: handleChange,
+                }}
+              />
+              <button
+                type="button"
+                className="mostrar-senha-login"
+                onClick={() => setMostrarSenha(!mostrarSenha)}
+              >
+                {mostrarSenha ? <EyeOff size={17} /> : <Eye size={17} />}
+              </button>
+            </div>
+
+            <div className="lembrar-esqueceu-acesso">
+              <label>
+                <input type="checkbox" />
+                Lembrar-me
+              </label>
+              <a href="#" className="esqueci-senha">
+                Esqueci minha senha
+              </a>
+            </div>
+
+            <button type="submit" className="button" disabled={carregando}>
+              {carregando ? "Entrando..." : "Login"}
             </button>
-          </div>
 
-          <div className="lembrar-esqueceu-acesso">
-            <label>
-              <input type="checkbox" />
-              Lembrar-me
-            </label>
-          </div>
-
-          <button type="submit" className="button" disabled={carregando}>
-            {carregando ? "Entrando..." : "Login"}
-          </button>
-
-          <div className="link-registro">
-            <p>
-              Não tem uma conta? <Link to="/cadastro">Registre-se aqui!</Link>
-            </p>
-          </div>
-        </form>
+            <div className="link-registro">
+              <p>
+                Não tem uma conta? <Link to="/cadastro">Registre-se aqui!</Link>
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
     </>
   );

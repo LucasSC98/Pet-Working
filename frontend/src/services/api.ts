@@ -1,26 +1,35 @@
-import axios from "axios"
+import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000",
-})
+  baseURL: "https://petworking.local/api",
+});
 
+// Configurar interceptor para adicionar token em todas as requisições
 api.interceptors.request.use(
   (config) => {
-    const storedUser = localStorage.getItem("@PetWorking:user")
-
-    if (storedUser) {
-      const { token } = JSON.parse(storedUser)
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`
-      }
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
-
-    return config
+    return config;
   },
   (error) => {
-    return Promise.reject(error)
-  },
-)
+    return Promise.reject(error);
+  }
+);
 
-export default api
+// Interceptor para tratar erros de autenticação
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      // Token inválido ou expirado
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
 
+export default api;

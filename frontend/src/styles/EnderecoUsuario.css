@@ -1,4 +1,4 @@
-/* Variáveis para consistência */
+/* variáveis de cores e estilos globais */
 :root {
   --primary-color: #026a6e;
   --primary-light: rgba(2, 106, 110, 0.1);
@@ -16,7 +16,6 @@
   --transition: all 0.3s ease;
 }
 
-/* Container principal */
 .endereco-container {
   padding: 20px;
   background-color: var(--white);

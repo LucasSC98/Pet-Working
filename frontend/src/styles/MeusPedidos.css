@@ -76,7 +76,7 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
   border-bottom: 1px solid #026a6e;
-  height: 60px; /* Altura fixa para todos os cabeçalhos */
+  height: 60px;
   box-sizing: border-box;
 }
 
@@ -84,22 +84,20 @@
   background-color: #f9f9f9;
 }
 
-/* Ajuste para informações principais */
 .pedido-info-principal {
   display: flex;
   align-items: center;
   gap: 24px;
-  flex: 1; /* Ocupa o espaço disponível */
-  max-width: 50%; /* Limita a largura máxima */
+  flex: 1;
+  max-width: 50%;
 }
 
-/* Ajustar o container de info secundária para ter largura fixa */
 .pedido-info-secundaria {
   display: flex;
   align-items: center;
   gap: 24px;
-  width: 300px; /* Largura fixa para manter consistência */
-  justify-content: flex-end; /* Alinha os elementos à direita */
+  width: 300px;
+  justify-content: flex-end;
 }
 
 .pedido-numero-container {
@@ -122,19 +120,18 @@
   color: #666;
 }
 
-/* Garantir que o status tenha tamanho consistente */
 .pedido-status {
   font-size: 10px;
   font-weight: 500;
   padding: 4px 8px;
   border-radius: 4px;
   min-width: 100px;
-  max-width: 100px; /* Evita que textos muito longos expandam */
+  max-width: 100px;
   text-align: center;
   margin-left: 50px;
-  white-space: nowrap; /* Evita quebra de linha */
-  overflow: hidden; /* Esconde texto excedente */
-  text-overflow: ellipsis; /* Mostra "..." para texto truncado */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .status-aguardando {
@@ -167,20 +164,18 @@
   color: #721c24;
 }
 
-/* Garantir que o valor do pedido tenha tamanho consistente */
 .pedido-valor {
   font-size: 14px;
   font-weight: 600;
   color: #026a6e;
   min-width: 80px;
-  max-width: 80px; /* Largura máxima fixa */
+  max-width: 80px;
   text-align: right;
   white-space: nowrap;
 }
 
-/* Ajuste para o ícone de expandir/colapsar */
 .pedido-expandir {
-  width: 20px; /* Largura fixa */
+  width: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -307,7 +302,6 @@
   background-color: #026a6e;
 }
 
-/* Ajuste da classe pedido-acoes para melhor alinhamento dos botões */
 .pedido-acoes {
   display: flex;
   justify-content: flex-end;
@@ -345,12 +339,12 @@
   background-color: #d32f2f;
 }
 
-/* Ajuste responsivo */
+/* responsividade */
 @media (max-width: 768px) {
   .pedido-cabecalho {
     flex-direction: column;
     align-items: flex-start;
-    height: auto; /* Para dispositivos móveis, permitir altura automática */
+    height: auto;
     padding: 12px 16px;
   }
 

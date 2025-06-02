@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import DashboardLayout from "../components/DashboardLayout";
 import api from "../services/api";
 import { useCarrinho } from "../context/CarrinhoContext";
+import { useAuth } from "../hooks/useAuth";
 import "../styles/DetalhesProduto.css";
 import { Minus, Plus, ShoppingBag } from "lucide-react";
 import Toast from "../components/Toast";
@@ -21,6 +22,7 @@ const DetalhesProduto = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { adicionarItem } = useCarrinho();
+  const { isAuthenticated } = useAuth();
 
   const [produto, setProduto] = useState<Produto | null>(null);
   const [quantidade, setQuantidade] = useState(1);
@@ -62,6 +64,16 @@ const DetalhesProduto = () => {
   };
 
   const handleAdicionarAoCarrinho = () => {
+    if (!isAuthenticated) {
+      setToastMessage("Faça login para adicionar produtos ao carrinho");
+      setToastType("erro");
+      setShowToast(true);
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+      return;
+    }
+
     if (produto) {
       adicionarItem(produto, quantidade);
       setToastMessage("Produto adicionado ao carrinho");

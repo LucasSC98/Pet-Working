@@ -14,14 +14,13 @@ const ConfirmacaoPedido = () => {
   const state = location.state as LocationState;
 
   useEffect(() => {
-    // Se não houver ID do pedido, redirecionar para a loja
     if (!state || !state.pedidoId) {
       navigate("/loja");
     }
   }, [state, navigate]);
 
   if (!state || !state.pedidoId) {
-    return null; // Não renderiza nada enquanto redireciona
+    return null;
   }
 
   return (

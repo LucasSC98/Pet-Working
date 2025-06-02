@@ -2,6 +2,11 @@ import { Request, Response } from "express";
 import UsuarioModelo from "../models/UsuarioModelo";
 import { formatarErros } from "../interfaces/Erros";
 import { RequisicaoAutenticada } from "../interfaces/usuarioAuth";
+import sequelize from "../config/database";
+import EnderecoModelo from "../models/EnderecoModelo";
+import PetModelo from "../models/PetModelo";
+import PedidoModelo from "../models/PedidoModelo";
+import AgendamentoModelo from "../models/AgendamentoModelo";
 
 interface AuthRequest extends Request {
   usuarioId?: number;
@@ -124,15 +129,65 @@ export const atualizarUsuario = async (req: AuthRequest, res: Response) => {
 };
 
 export const deletarUsuario = async (req: Request, res: Response) => {
+  const t = await sequelize.transaction();
   try {
-    const usuario = await UsuarioModelo.findByPk(req.params.id);
-    if (usuario) {
-      await usuario.destroy();
-      res.send({ message: "Usuario foi removido com sucesso" });
-    } else {
-      res.status(404).send({ message: "Usuario não foi encontrado" });
+    const { id } = req.params;
+    const usuarioId = req.usuarioId;
+    const usuario = await UsuarioModelo.findByPk(id);
+    if (!usuario) {
+      await t.rollback();
+      return res.status(404).send({
+        message: "Usuário não encontrado",
+      });
+    }
+    if (Number(id) !== Number(usuarioId)) {
+      await t.rollback();
+      return res.status(403).send({
+        message: "Você só pode deletar sua própria conta",
+      });
+    }
+
+    try {
+      await AgendamentoModelo.destroy({
+        where: { id_usuario: id },
+        transaction: t,
+      });
+      await PedidoModelo.destroy({
+        where: { id_usuario: id },
+        transaction: t,
+      });
+      await PetModelo.destroy({
+        where: { id_usuario: id },
+        transaction: t,
+      });
+      await EnderecoModelo.destroy({
+        where: { id_usuario: id },
+        transaction: t,
+      });
+
+      await usuario.destroy({ transaction: t });
+      await t.commit();
+
+      return res.status(200).send({
+        message:
+          "Usuário e todos os dados relacionados foram deletados com sucesso",
+      });
+    } catch (error) {
+      await t.rollback();
+      if (formatarErros(error)) {
+        return res.status(400).send({
+          message: "Erro ao deletar usuário",
+          errors: error.errors.map((err) => err.message),
+        });
+      }
+      throw error;
     }
   } catch (error) {
-    res.status(400).send({ message: "Erro ao remover o usuario", error });
+    await t.rollback();
+    console.error("Erro ao deletar usuário:", error);
+    return res.status(500).send({
+      message: "Erro interno ao deletar usuário",
+      error: error instanceof Error ? error.message : "Erro desconhecido",
+    });
   }
 };

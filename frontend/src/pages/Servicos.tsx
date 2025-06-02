@@ -5,14 +5,12 @@ import DashboardLayout from "../components/DashboardLayout";
 import api from "../services/api";
 import "../styles/Servicos.css";
 
-
 interface Servicos {
   id_servico: number;
-    nome: string;
-    descricao: string;
-    preco: number;
-    fotoServico: string;
-
+  nome: string;
+  descricao: string;
+  preco: number;
+  fotoServico: string;
 }
 
 const Servicos = () => {
@@ -37,12 +35,11 @@ const Servicos = () => {
   }, []);
 
   const handleAgendarServico = (servicoId: number) => {
-    // Navega para a página de agendamentos com o ID do serviço como state
-    navigate('/agendamentos', { 
-      state: { 
+    navigate("/agendamentos", {
+      state: {
         novoAgendamento: true,
-        servicoId: servicoId 
-      } 
+        servicoId: servicoId,
+      },
     });
   };
 
@@ -57,9 +54,7 @@ const Servicos = () => {
           <h2>Serviços</h2>
         </div>
 
-        <div className="filters-bar">
-
-        </div>
+        <div className="filters-bar"></div>
 
         <div className="servicos-list">
           {servicos.map((servico) => (
@@ -71,7 +66,7 @@ const Servicos = () => {
                 <p>R$ {servico.preco.toFixed(2)}</p>
               </div>
               <div className="servico-card-actions">
-                <button 
+                <button
                   onClick={() => handleAgendarServico(servico.id_servico)}
                   className="btn-detalhes"
                 >
@@ -87,6 +82,3 @@ const Servicos = () => {
 };
 
 export default Servicos;
-
-
-

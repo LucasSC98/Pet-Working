@@ -5,6 +5,7 @@ import api from "../services/api";
 import "../styles/DetalhesAgendamento.css";
 import TelaConfirmacao from "../components/TelaConfirmacao";
 import Toast from "../components/Toast";
+import { useAuth } from "../hooks/useAuth";
 
 interface Agendamento {
   servico: {
@@ -25,6 +26,7 @@ interface Agendamento {
 const DetalhesAgendamento = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [agendamento, setAgendamento] = useState<Agendamento | null>(null);
   const [loading, setLoading] = useState(true);
   const [showConfirmCancelar, setShowConfirmCancelar] = useState(false);
@@ -34,16 +36,26 @@ const DetalhesAgendamento = () => {
     horario: "",
   });
   const [showConfirmExcluir, setShowConfirmExcluir] = useState(false);
-
-  // Toast states
   const [toastMensagem, setToastMensagem] = useState("");
   const [toastTipo, setToastTipo] = useState<"successo" | "erro">("successo");
   const [showToast, setShowToast] = useState(false);
 
+  const getToken = () => {
+    const storedUser = localStorage.getItem("@PetWorking:user");
+    return storedUser ? JSON.parse(storedUser).token : null;
+  };
+
   useEffect(() => {
     const fetchAgendamento = async () => {
       try {
-        const token = localStorage.getItem("token");
+        if (!isAuthenticated) {
+          setToastMensagem("Usuário não autenticado");
+          setToastTipo("erro");
+          setShowToast(true);
+          return;
+        }
+
+        const token = getToken();
         const response = await api.get(`/agendamentos/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -73,6 +85,9 @@ const DetalhesAgendamento = () => {
         setNovoHorario({ data: data.data, horario: data.horario });
       } catch (error) {
         console.error("Erro ao carregar detalhes do agendamento:", error);
+        setToastMensagem("Erro ao carregar dados do agendamento");
+        setToastTipo("erro");
+        setShowToast(true);
       } finally {
         setLoading(false);
       }
@@ -81,11 +96,18 @@ const DetalhesAgendamento = () => {
     if (id) {
       fetchAgendamento();
     }
-  }, [id]);
+  }, [id, isAuthenticated]);
 
   const handleCancelarAgendamento = async () => {
     try {
-      const token = localStorage.getItem("token");
+      if (!isAuthenticated) {
+        setToastMensagem("Usuário não autenticado");
+        setToastTipo("erro");
+        setShowToast(true);
+        return;
+      }
+
+      const token = getToken();
       const response = await api.patch(
         `/agendamentos/${id}/cancelar`,
         {},
@@ -130,7 +152,14 @@ const DetalhesAgendamento = () => {
 
   const handleMudarHorario = async () => {
     try {
-      const token = localStorage.getItem("token");
+      if (!isAuthenticated) {
+        setToastMensagem("Usuário não autenticado");
+        setToastTipo("erro");
+        setShowToast(true);
+        return;
+      }
+
+      const token = getToken();
       const response = await api.patch(
         `/agendamentos/${id}/mudar-horario`,
         novoHorario,
@@ -160,7 +189,14 @@ const DetalhesAgendamento = () => {
 
   const handleExcluirAgendamento = async () => {
     try {
-      const token = localStorage.getItem("token");
+      if (!isAuthenticated) {
+        setToastMensagem("Usuário não autenticado");
+        setToastTipo("erro");
+        setShowToast(true);
+        return;
+      }
+
+      const token = getToken();
       const response = await api.delete(`/agendamentos/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });

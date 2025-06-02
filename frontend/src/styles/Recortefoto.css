@@ -60,7 +60,7 @@
 .preview-img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Isso fará a imagem cobrir todo o espaço mantendo a proporção */
+  object-fit: cover;
 }
 
 .ReactCrop {
@@ -76,7 +76,7 @@
 .ReactCrop img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* isso manterá a proporção da imagem */
+  object-fit: contain;
   max-height: 300px;
 }
 

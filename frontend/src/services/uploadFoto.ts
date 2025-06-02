@@ -8,8 +8,6 @@ export const uploadImagem = async (
     "upload_preset",
     import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
   );
-
-  // Se fornecido um folder, adiciona ao FormData
   if (folder) {
     formData.append("folder", folder);
   }

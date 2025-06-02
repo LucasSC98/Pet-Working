@@ -152,7 +152,8 @@ const MeusPedidos = () => {
 
     try {
       setLoading(true);
-      const token = localStorage.getItem("token");
+      const storedUser = localStorage.getItem("@PetWorking:user");
+      const token = storedUser ? JSON.parse(storedUser).token : null;
 
       if (acaoAtual === "cancelar") {
         const response = await api.patch(

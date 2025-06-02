@@ -22,190 +22,520 @@
   bottom: -250px;
 }
 
-.wrapper-cadastro {
-  width: 500px;
-  background: rgba(2, 106, 110, 0.95); /* Leve transparência */
-  color: rgb(255, 255, 255);
-  border-radius: 15px; /* Bordas mais arredondadas */
-  padding: 30px; /* Mais espaçamento interno */
-  margin: auto;
-  position: fixed;
+/* Estilo para o ícone de calendário */
+.calendario-icon {
+  position: absolute;
+  right: 15px;
   top: 50%;
-  right: 0;
+  transform: translateY(-50%);
+  color: #026a6e;
+  cursor: pointer;
+  padding: 5px;
+  z-index: 1;
+  transition: color 0.2s ease;
+}
+
+.calendario-icon:hover {
+  color: #ff8000;
+}
+
+/* Estilo para o cadastro seguindo o mesmo padrão do login */
+.wrapper-cadastro {
+  width: 1000px;
+  height: 600px;
+  min-height: 560px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #333;
+  border-radius: 20px;
+  padding: 0;
+  position: fixed;
+  top: 56%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); /* Sombra mais suave e elegante */
-  backdrop-filter: blur(5px); /* Suave efeito de desfoque no fundo */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Borda sutil para um acabamento melhor */
+  box-shadow: 0 20px 40px rgba(2, 106, 110, 0.1),
+    0 10px 20px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+  display: flex;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -48%);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-}
-
-.wrapper-cadastro .input-box-cadastro {
-  position: relative;
-  width: 100%;
-  height: 50px;
-  margin: 20px 0;
-}
-
-.wrapper-cadastro .input-box-cadastro input {
-  width: 100%;
-  height: 70%;
-  padding: 10px 45px 5px 20px; /* Aumentado padding direito */
-  font-size: 15px;
-  color: rgb(255, 255, 255);
-  background: transparent;
-  border: 2px solid rgb(221, 221, 221);
-  border-radius: 40px;
-  transition: all 0.3s ease-in-out;
-}
-
-.wrapper-cadastro .input-box-cadastro input:focus {
-  border-color: rgb(255, 128, 0); /* Mesma cor do hover */
-  outline: none; /* Remove a borda preta padrão */
-}
-
-.wrapper-cadastro .input-box-cadastro input:hover {
-  border-color: rgb(255, 128, 0);
-}
-
-/* Estilização do input de data */
-.input-box-cadastro input[type="date"] {
-  color: rgb(255, 255, 255);
-  font-family: inherit;
-}
-
-/* Remove o ícone padrão do navegador */
-.input-box-cadastro input[type="date"]::-webkit-calendar-picker-indicator {
-  opacity: 0;
-  width: 100%;
-  height: 100%;
+/* Barra decorativa superior */
+.wrapper-cadastro::before {
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
-  cursor: pointer;
+  right: 0;
+  height: 3px;
+  background-size: 200% 100%;
 }
 
-/* Ajusta a cor do texto placeholder */
-.input-box-cadastro input[type="date"]::-webkit-datetime-edit-text,
-.input-box-cadastro input[type="date"]::-webkit-datetime-edit-month-field,
-.input-box-cadastro input[type="date"]::-webkit-datetime-edit-day-field,
-.input-box-cadastro input[type="date"]::-webkit-datetime-edit-year-field {
-  color: rgb(255, 255, 255);
+/* Lado esquerdo - Imagem */
+.cadastro-left-side {
+  flex: 1;
+  background: linear-gradient(135deg, #026a6e 0%, #034f52 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px 0 0 20px;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Ajusta a cor do placeholder quando vazio */
-.input-box-cadastro input[type="date"]:invalid::-webkit-datetime-edit {
-  color: rgba(255, 255, 255, 0.7);
+/* Container para imagem circular */
+.cadastro-image-container {
+  width: 320px;
+  height: 300px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 1.6px solid #ff9900;
+  z-index: 5;
 }
 
-.wrapper-cadastro .button-cadastro {
+.cadastro-image-card {
   width: 100%;
-  height: 40px;
-  background: white;
-  border: none;
-  outline: none;
-  border-radius: 40px;
-  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  font-size: 15px;
-  color: #333;
-  font-weight: 600;
-  margin-top: 10px;
-  transition: background-color 0.3s ease-in-out;
+  height: 100%;
+  object-fit: fill;
+  object-position: center;
+  border-radius: 50%;
 }
 
-.wrapper-cadastro .button-cadastro:hover {
-  background: rgb(255, 128, 0);
-  color: rgb(255, 255, 255);
-}
-
-.wrapper-cadastro .link-login {
-  text-align: center;
-  margin: 20px 0 15px;
-}
-
-.link-login a {
-  color: rgb(255, 255, 255);
-  text-decoration: none;
-}
-
-.link-login a:hover {
-  text-decoration: underline;
-  color: rgb(255, 128, 0);
-}
-
-.input-box-cadastro select {
-  width: 100%;
-  padding: 10px;
-  font-size: 15px;
-  background: rgb(2, 106, 110);
-  border: 2px solid rgb(221, 221, 221);
-  border-radius: 40px;
-  outline: none;
-  color: rgb(255, 255, 255);
-}
-
-.input-box-cadastro select:focus {
-  border-color: #ff8000;
-}
-.erro-mensagem {
-  background-color: rgba(167, 0, 0, 0.1);
-  border: 1px solid #ff3333;
-  color: #ff3333;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 15px;
-  text-align: center;
-  font-size: 14px;
-}
-
-.sucesso-mensagem {
-  background-color: rgba(0, 255, 0, 0.1);
-  border: 1px solid #00cc00;
-  color: #00cc00;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 15px;
-  text-align: center;
-  font-size: 14px;
-}
-
-/* Ajuste a posição do botão mostrar senha */
-.mostrar-senha-cadastro {
+/* Adiciona um efeito de brilho ao redor da imagem */
+.cadastro-image-container::before {
+  content: "";
   position: absolute;
-  right: 15px;
-  top: 35%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #f5f5f5;
-  padding: 5px;
-  z-index: 2;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: linear-gradient(
+    45deg,
+    rgba(2, 106, 110, 0.5),
+    transparent,
+    rgba(255, 128, 0, 0.3)
+  );
+  border-radius: 50%;
+  z-index: -1;
+  filter: blur(10px);
+  animation: rotate 10s linear infinite;
 }
-.mostrar-senha-cadastro:hover {
+
+/* Ajuste para o efeito de padrão no fundo */
+.cadastro-left-side::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 128, 0, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 70%,
+      rgba(255, 255, 255, 0.05) 0%,
+      transparent 30%
+    );
   opacity: 0.8;
 }
 
-.mostrar-senha-cadastro:focus {
+/* Lado direito - Formulário */
+.cadastro-right-side {
+  flex: 1;
+  padding: 25px 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.cadastro-form {
+  width: 100%;
+}
+
+.cadastro-title {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: 700;
+  background: #026a6e;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Ajustes nos inputs para espaçamento padrão */
+.wrapper-cadastro .input-box-cadastro {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  margin: 12px 0;
+}
+
+.logo-cadastro {
+  right: 10px;
+  width: 150px;
+  height: 40px;
+  z-index: 15;
+}
+
+.input-box-cadastro input,
+.input-box-cadastro select {
+  width: 100%;
+  height: 100%;
+  padding: 8px 35px 8px 15px;
+  font-size: 14px;
+  color: #333;
+  background: rgba(246, 248, 250, 0.8);
+  border: 1px solid rgba(2, 106, 110, 0.1);
   outline: none;
+  border-radius: 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Ajustes para os ícones e botões dentro dos inputs - CORRIGINDO DUPLICAÇÃO */
+
+/* Remova esta primeira definição duplicada */
+.mostrar-senha-cadastro,
+.calendario-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 5px;
+  font-size: 14px;
+  z-index: 1;
+}
+
+/* Mantenha apenas estas definições específicas e completas */
+.mostrar-senha-cadastro {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(2, 106, 110, 0.1);
+  border: none;
+  cursor: pointer;
+  color: #026a6e;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  z-index: 1;
 }
 
 .calendario-icon {
   position: absolute;
   right: 15px;
-  top: 35%;
+  top: 50%;
   transform: translateY(-50%);
-  color: #f5f5f5;
-  pointer-events: none;
-  z-index: 2;
+  color: #026a6e;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1;
+  transition: color 0.2s ease;
+  background: rgba(2, 106, 110, 0.1);
+  border-radius: 8px;
+}
+
+.calendario-icon:hover {
+  background: rgba(2, 106, 110, 0.2);
+  color: #ff8000;
+}
+
+.input-box-cadastro input:focus,
+.input-box-cadastro select:focus {
+  border-color: #026a6e;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 3px rgba(2, 106, 110, 0.1);
+  transform: translateY(-1px);
+}
+
+.input-box-cadastro input::placeholder,
+.input-box-cadastro select::placeholder {
+  color: rgba(51, 51, 51, 0.6);
+  font-weight: 400;
+}
+
+/* Estilo para o botão mostrar senha */
+.mostrar-senha-cadastro {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(2, 106, 110, 0.1);
+  border: none;
+  cursor: pointer;
+  color: #026a6e;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.mostrar-senha-cadastro:hover {
+  background: rgba(2, 106, 110, 0.2);
+  color: #ff8000;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.calendario-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #026a6e;
+  z-index: 1;
+}
+
+.wrapper-cadastro .button-cadastro {
+  width: 100%;
+  height: 45px;
+  margin-top: 15px;
+  font-size: 15px;
+  background: linear-gradient(135deg, #026a6e 0%, #034f52 100%);
+  border: none;
+  outline: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(2, 106, 110, 0.3);
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  font-weight: 600;
+  margin-top: 15px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.wrapper-cadastro .button-cadastro::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.wrapper-cadastro .button-cadastro:hover {
+  background: linear-gradient(135deg, #ff8000 0%, #e67300 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(255, 128, 0, 0.4);
+}
+
+.wrapper-cadastro .button-cadastro:hover::before {
+  left: 100%;
+}
+
+.wrapper-cadastro .link-login {
+  text-align: center;
+  margin: 15px 0 10px;
+  font-size: 13px;
+}
+
+.link-login p {
+  color: #666;
+  margin: 0;
+}
+
+.link-login a {
+  color: #026a6e;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 5px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.link-login a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #ff8000;
+  transition: width 0.3s ease;
+}
+
+.link-login a:hover {
+  color: #ff8000;
+}
+
+.link-login a:hover::after {
+  width: 100%;
+}
+
+/* Estilos específicos para o header do Cadastro */
+.header-cadastro {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  padding: 10px 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.container-logo-cadastro {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* Responsividade */
+@media (max-width: 960px) {
+  .wrapper-cadastro {
+    width: 90%;
+    max-width: 500px;
+    flex-direction: column;
+  }
+
+  .cadastro-left-side {
+    height: 200px;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .cadastro-image-container {
+    width: 180px;
+    height: 180px;
+  }
+
+  .cadastro-right-side {
+    padding: 30px;
+  }
+}
+
+/* Remover estilos antigos que não são mais necessários */
+.logo-img-cadastro,
+.cachorro-img {
+  display: none;
+}
+
+/* Container para o DatePicker - CORRIGIDO PARA APARECER ACIMA */
+.date-picker-container {
+  position: absolute;
+  right: 0;
+  bottom: calc(
+    100% + 10px
+  ); /* Alterado de top para bottom para posicionar acima */
+  z-index: 999;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  background: white;
+  width: 300px; /* Largura fixa para evitar problemas de layout */
+  height: 320px;
+}
+
+/* Adicionar uma seta indicativa apontando para baixo */
+.date-picker-container::after {
+  content: "";
+  position: absolute;
+  bottom: -8px; /* Posição ajustada para ficar na parte inferior */
+  right: 20px;
+  width: 16px;
+  height: 16px;
+  transform: rotate(45deg);
+  background: white;
+  box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.08);
+}
+
+/* Estilização do DatePicker */
+.react-datepicker {
+  width: 100%;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+  border-radius: 10px !important;
+  overflow: hidden;
+  border: none !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.react-datepicker__month-container {
+  width: 100%;
+}
+
+.react-datepicker__header {
+  background: linear-gradient(135deg, #026a6e 0%, #034f52 100%) !important;
+  border-bottom: none !important;
+  padding: 15px 0 !important;
+}
+
+.react-datepicker__current-month {
+  color: white !important;
+  font-weight: bold !important;
+  font-size: 16px !important;
+}
+
+.react-datepicker__day-name {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 500 !important;
+  margin: 5px !important;
+  width: 30px !important;
+}
+
+.react-datepicker__day {
+  width: 30px !important;
+  height: 30px !important;
+  line-height: 30px !important;
+  margin: 5px !important;
+  border-radius: 50% !important;
+}
+
+.react-datepicker__navigation {
+  top: 15px !important;
+}
+
+.react-datepicker__day--selected {
+  background-color: #026a6e !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: rgba(2, 106, 110, 0.3) !important;
+}
+
+.react-datepicker__day:hover {
+  background-color: rgba(2, 106, 110, 0.2) !important;
+}
+
+/* Estilos para os seletores de mês/ano */
+.react-datepicker__month-select,
+.react-datepicker__year-select {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid #026a6e !important;
+  border-radius: 5px !important;
+  padding: 5px 10px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #026a6e !important;
+  margin: 0 5px !important;
+}
+
+/* Fazer o input de data parecer interativo */
+.input-box-cadastro input[readonly] {
+  cursor: pointer;
+  background: rgba(246, 248, 250, 0.8);
+}
+
+.input-box-cadastro input[readonly]:focus {
+  border-color: #026a6e;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 3px rgba(2, 106, 110, 0.1);
 }

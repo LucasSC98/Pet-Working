@@ -1,9 +1,20 @@
 import { ReactNode, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import petworkinglogo from "../assets/PetWorking.png";
+import petworkinglogo from "../assets/petrking.png";
 import "../styles/Dashboard.css";
-import { LogOut, Logs } from "lucide-react";
+import {
+  Home,
+  Calendar,
+  Package,
+  ShoppingBag,
+  LogOut,
+  Users,
+  Heart,
+  Stethoscope,
+  Settings,
+  Menu,
+} from "lucide-react";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -28,16 +39,12 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
 
   return (
     <div className="dashboard-layout">
+      {" "}
       <aside className={`sidebar ${menuMobile ? "sidebar-mobile-active" : ""}`}>
         <div className="sidebar-header">
-          <img src={petworkinglogo} alt="PetWorking" className="logo-image" />
-          <button
-            className="close-menu-btn"
-            onClick={toggleMobileMenu}
-            aria-label="Fechar menu"
-          >
-            &times;
-          </button>
+          <div className="logo-container">
+            <img src={petworkinglogo} alt="PetWorking" className="logo-image" />
+          </div>
         </div>
 
         <div className="user-profile">
@@ -49,12 +56,16 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                 className="profile-photo"
               />
             ) : (
-              user?.nome?.charAt(0) || "U"
+              <div className="avatar-fallback">
+                {user?.nome?.charAt(0) || "U"}
+              </div>
             )}
           </div>
-          <Link to="/minha-conta" className="user-name">
-            {user?.nome || "Usuário"}
-          </Link>
+          <div className="user-info">
+            <Link to="/minha-conta" className="user-name">
+              {user?.nome}
+            </Link>
+          </div>
         </div>
 
         <nav className="sidebar-nav">
@@ -64,14 +75,18 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                 to="/dashboard"
                 className={isActive("/dashboard") ? "active" : ""}
               >
-                <span className="nav-icon">🏠</span>
-                Dashboard
+                <div className="nav-icon">
+                  <Home size={20} />
+                </div>
+                <span className="nav-text">Dashboard</span>
               </Link>
             </li>
             <li>
               <Link to="/pets" className={isActive("/pets") ? "active" : ""}>
-                <span className="nav-icon">🐾</span>
-                Meus Pets
+                <div className="nav-icon">
+                  <Heart size={20} />
+                </div>
+                <span className="nav-text">Meus Pets</span>
               </Link>
             </li>
             <li>
@@ -79,8 +94,10 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                 to="/agendamentos"
                 className={isActive("/agendamentos") ? "active" : ""}
               >
-                <span className="nav-icon">📅</span>
-                Agendamentos
+                <div className="nav-icon">
+                  <Calendar size={20} />
+                </div>
+                <span className="nav-text">Agendamentos</span>
               </Link>
             </li>
             <li>
@@ -88,14 +105,18 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                 to="/servicos"
                 className={isActive("/servicos") ? "active" : ""}
               >
-                <span className="nav-icon">💉</span>
-                Serviços
+                <div className="nav-icon">
+                  <Stethoscope size={20} />
+                </div>
+                <span className="nav-text">Serviços</span>
               </Link>
             </li>
             <li>
               <Link to="/loja" className={isActive("/loja") ? "active" : ""}>
-                <span className="nav-icon">🛍️</span>
-                Loja Pet
+                <div className="nav-icon">
+                  <ShoppingBag size={20} />
+                </div>
+                <span className="nav-text">Loja Pet</span>
               </Link>
             </li>
             <li>
@@ -103,8 +124,10 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                 to="/loja/meus-pedidos"
                 className={isActive("/loja/meus-pedidos") ? "active" : ""}
               >
-                <span className="nav-icon">🛒</span>
-                Pedidos
+                <div className="nav-icon">
+                  <Package size={20} />
+                </div>
+                <span className="nav-text">Pedidos</span>
               </Link>
             </li>
             <li>
@@ -112,12 +135,34 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                 to="/configuracoes"
                 className={isActive("/configuracoes") ? "active" : ""}
               >
-                <span className="nav-icon">⚙️</span>
-                Configurações
+                <div className="nav-icon">
+                  <Settings size={20} />
+                </div>
+                <span className="nav-text">Configurações</span>
               </Link>
             </li>
           </ul>
         </nav>
+
+        {user && "tipo" in user && user.tipo === "admin" && (
+          <>
+            <div className="nav-divider">
+              <span className="divider-text">Administração</span>
+            </div>
+            <NavLink to="/admin/agendamentos" className="nav-link">
+              <Calendar size={20} />
+              <span>Todos Agendamentos</span>
+            </NavLink>
+            <NavLink to="/admin/pedidos" className="nav-link">
+              <Package size={20} />
+              <span>Todos Pedidos</span>
+            </NavLink>
+            <NavLink to="/admin/usuarios" className="nav-link">
+              <Users size={20} />
+              <span>Usuários</span>
+            </NavLink>
+          </>
+        )}
 
         <div className="sidebar-footer">
           <button
@@ -125,8 +170,8 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             onClick={handleLogout}
             title="Sair da conta"
           >
-            Sair da conta
-            <LogOut size={18} style={{ marginLeft: "1rem" }} />
+            <LogOut size={18} />
+            <span>Sair da conta</span>
           </button>
         </div>
       </aside>
@@ -137,7 +182,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             onClick={toggleMobileMenu}
             aria-label="Abrir menu"
           >
-            <Logs size={24} />
+            <Menu size={24} />
           </button>
           <img src={petworkinglogo} alt="PetWorking" className="logo-image" />
           <div className="mobile-user">

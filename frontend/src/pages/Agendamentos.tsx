@@ -50,7 +50,8 @@ const Agendamentos = () => {
 
   const fetchAgendamentos = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const storedUser = localStorage.getItem("@PetWorking:user");
+      const token = storedUser ? JSON.parse(storedUser).token : null;
 
       if (!token || !user?.id) return;
 

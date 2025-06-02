@@ -53,9 +53,51 @@ const CadastroPet = ({
   );
   const [carregando, setCarregando] = useState(false);
   const [tempImage, setTempImage] = useState<string | null>(null);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validarFormulario = () => {
+    const novosErros: Record<string, string> = {};
+
+    if (!formData.nome.trim()) {
+      novosErros.nome = "O nome do pet é obrigatório";
+    }
+
+    if (!formData.idade) {
+      novosErros.idade = "A idade do pet é obrigatória";
+    } else if (parseInt(formData.idade) < 0) {
+      novosErros.idade = "A idade não pode ser negativa";
+    }
+
+    if (!formData.especie) {
+      novosErros.especie = "A espécie do pet é obrigatória";
+    }
+
+    if (!formData.raca.trim()) {
+      novosErros.raca = "A raça do pet é obrigatória";
+    }
+
+    if (!formData.peso) {
+      novosErros.peso = "O peso do pet é obrigatório";
+    } else if (parseFloat(formData.peso) <= 0) {
+      novosErros.peso = "O peso deve ser maior que zero";
+    }
+
+    setErrors(novosErros);
+    return Object.keys(novosErros).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validarFormulario()) {
+      setTipoNotificacao("erro");
+      setMensagemNotificacao(
+        "Por favor, preencha todos os campos obrigatórios corretamente!"
+      );
+      setShowToast(true);
+      return;
+    }
+
     try {
       if (modo === "edicao" && petParaEditar) {
         await api.patch(`/pets/${petParaEditar.id_pet}`, {
@@ -81,7 +123,9 @@ const CadastroPet = ({
     } catch (error) {
       console.error("Erro:", error);
       setTipoNotificacao("erro");
-      setMensagemNotificacao("Erro ao salvar o pet. Tente novamente!");
+      setMensagemNotificacao(
+        "Erro ao salvar o pet. Verifique os dados e tente novamente!"
+      );
       setShowToast(true);
     }
   };
@@ -179,6 +223,7 @@ const CadastroPet = ({
             value={formData.nome}
             onChange={handleChange}
             textColor="#026a6e"
+            error={errors.nome}
           />
           <Input
             label="Idade:"
@@ -187,6 +232,7 @@ const CadastroPet = ({
             value={formData.idade}
             onChange={handleChange}
             textColor="#026a6e"
+            error={errors.idade}
           />
           <Input
             label="Espécie:"
@@ -212,6 +258,7 @@ const CadastroPet = ({
               { value: "Caprino", label: "Caprino" },
               { value: "Outro", label: "Outro" },
             ]}
+            error={errors.especie}
           />
           <Input
             label="Raça:"
@@ -220,6 +267,7 @@ const CadastroPet = ({
             value={formData.raca}
             onChange={handleChange}
             textColor="#026a6e"
+            error={errors.raca}
           />
           <div className="form-group">
             <div className="upload-container">
@@ -294,6 +342,7 @@ const CadastroPet = ({
             value={formData.peso}
             onChange={handleChange}
             textColor="#026a6e"
+            error={errors.peso}
           />
           <Input
             label="Descrição:"

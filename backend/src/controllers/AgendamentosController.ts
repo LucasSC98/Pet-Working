@@ -8,12 +8,9 @@ import UsuarioModelo from "../models/UsuarioModelo";
 
 export const buscarTodosAgendamentos = async (req: Request, res: Response) => {
   try {
-    // Pega os parâmetros de paginação da query, com valores padrão
     const pagina = Number(req.query.pagina) || 1;
     const limite = Number(req.query.limite) || 5;
     const offset = (pagina - 1) * limite;
-
-    // Busca agendamentos com paginação
     const { count, rows: agendamentos } =
       await AgendamentoModelo.findAndCountAll({
         limit: limite,
@@ -111,14 +108,11 @@ export const criarNovoAgendamento = async (req: Request, res: Response) => {
       });
     }
 
-    // Validar se precisa de transporte e tem endereço
     if (precisa_transporte && !id_endereco) {
       return res.status(400).json({
         message: "Endereço é obrigatório quando transporte é necessário",
       });
     }
-
-    // Convertendo explicitamente para garantir o tipo correto
     const novoAgendamento = await AgendamentoModelo.create({
       id_pet,
       id_endereco: precisa_transporte ? id_endereco : null,
@@ -128,11 +122,9 @@ export const criarNovoAgendamento = async (req: Request, res: Response) => {
       id_usuario,
       status: status || "Agendado",
       descricao_sintomas,
-      precisa_transporte: Boolean(precisa_transporte), // Garantindo que é booleano
-      forma_pagamento: forma_pagamento, // Garantindo que está incluído
+      precisa_transporte: Boolean(precisa_transporte),
+      forma_pagamento: forma_pagamento,
     });
-
-    console.log("Agendamento criado:", novoAgendamento.toJSON());
 
     res.status(201).json({
       message: "Agendamento criado com sucesso",
@@ -258,5 +250,28 @@ export const mudarHorarioAgendamento = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Erro ao alterar horário do agendamento:", error);
     return res.status(500).json({ message: "Erro ao alterar horário" });
+  }
+};
+
+export const deletarAgendamentosDoUsuario = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { id } = req.params;
+    await AgendamentoModelo.destroy({
+      where: {
+        id_usuario: id,
+      },
+    });
+
+    res.status(200).json({
+      message: "Todos os agendamentos do usuário foram deletados com sucesso",
+    });
+  } catch (error) {
+    console.error("Erro ao deletar agendamentos do usuário:", error);
+    res
+      .status(500)
+      .json({ message: "Erro ao deletar agendamentos do usuário" });
   }
 };

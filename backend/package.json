@@ -6,7 +6,7 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
-    "test": "jest --maxWorkers=1 --verbose"
+    "test": "jest --maxWorkers=1 --verbose --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
