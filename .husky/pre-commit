@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "🎯 Teste direto: Husky funcionando no Windows"
+exit 0
