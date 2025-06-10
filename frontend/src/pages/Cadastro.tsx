@@ -79,7 +79,7 @@ function Cadastro() {
 
     if (formData.senha !== formData.confirmarSenha) {
       setToastType("erro");
-      setToastMessage("As senhas não coincidem");
+      setToastMessage("As senhas não coincidemm");
       setShowToast(true);
       return;
     }

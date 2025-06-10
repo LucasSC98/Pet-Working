@@ -10,7 +10,6 @@
 # Misc
 **/.DS_Store
 **/.env*
-**/docker-compose.yml
 
 
 # Certificados SSL

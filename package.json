@@ -3,7 +3,7 @@
     "husky": "^9.1.7"
   },
   "scripts": {
-    "prepare": "echo 'Husky ready!'"
-}
-
+    "prepare": "husky install",
+    "precommit": "npm --prefix frontend run lint && npm --prefix backend run lint"
+  }
 }
