@@ -32,11 +32,11 @@ function Cadastro() {
 
   // Estado para controlar o DatePicker
   const [startDate, setStartDate] = useState<Date | null>(null);
-
   const [carregando, setCarregando] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [toastType, setToastType] = useState<"successo" | "erro">("erro");
+  const [toastId, setToastId] = useState("");
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
 
@@ -76,18 +76,17 @@ function Cadastro() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
     if (formData.senha !== formData.confirmarSenha) {
       setToastType("erro");
       setToastMessage("As senhas não coincidemm");
+      setToastId("senha-diferente");
       setShowToast(true);
       return;
-    }
-
-    // Validação da data de nascimento
+    } // Validação da data de nascimento
     if (!formData.dataNascimento) {
       setToastType("erro");
       setToastMessage("Por favor, selecione uma data de nascimento");
+      setToastId("data-nascimento-vazia");
       setShowToast(true);
       return;
     }
@@ -96,10 +95,10 @@ function Cadastro() {
     const dataNascimento = new Date(formData.dataNascimento);
     const idade = hoje.getFullYear() - dataNascimento.getFullYear();
     const mesAtual = hoje.getMonth() - dataNascimento.getMonth();
-
     if (idade < 18 || (idade === 18 && mesAtual < 0)) {
       setToastType("erro");
       setToastMessage("É necessário ter mais de 18 anos para se cadastrar");
+      setToastId("menor-idade");
       setShowToast(true);
       return;
     }
@@ -116,10 +115,10 @@ function Cadastro() {
         genero: formData.genero,
         fotoDePerfil: formData.fotoDePerfil || "",
       });
-
       if (response.status === 201) {
         setToastType("successo");
         setToastMessage("Cadastro realizado com sucesso! Fazendo login...");
+        setToastId("cadastro-sucesso");
         setShowToast(true);
 
         try {
@@ -131,6 +130,7 @@ function Cadastro() {
           setToastMessage(
             "Cadastro realizado, mas não foi possível fazer login automático. Redirecionando..."
           );
+          setToastId("erro-login-automatico");
           setShowToast(true);
           setTimeout(() => {
             navigation("/login");
@@ -140,13 +140,27 @@ function Cadastro() {
     } catch (error) {
       console.error("Erro no cadastro:", error);
       let mensagemErro = "Erro ao realizar cadastro";
+      let errorId = "erro-cadastro-generico";
+
       if (error instanceof Error && "response" in error) {
         const apiError = error as ApiError;
-        mensagemErro = apiError.response.data.message || "Erro ao cadastrar";
+        const backendMsg = apiError.response.data.message;
+
+        if (backendMsg?.toLowerCase().includes("email")) {
+          mensagemErro = "E-mail já cadastrado";
+          errorId = "email-ja-cadastrado";
+        } else if (backendMsg?.toLowerCase().includes("cpf")) {
+          mensagemErro = "CPF já cadastrado";
+          errorId = "cpf-ja-cadastrado";
+        } else {
+          mensagemErro = backendMsg || "Erro ao cadastrar";
+          errorId = "erro-backend";
+        }
       }
 
       setToastType("erro");
       setToastMessage(mensagemErro);
+      setToastId(errorId);
       setShowToast(true);
     } finally {
       setCarregando(false);
@@ -155,10 +169,12 @@ function Cadastro() {
 
   return (
     <>
+      {" "}
       <Toast
         message={toastMessage}
         type={toastType}
         show={showToast}
+        testId={toastId}
         onClose={() => setShowToast(false)}
       />
       <header className="header-cadastro">
