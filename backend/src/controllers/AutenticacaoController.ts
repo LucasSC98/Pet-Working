@@ -45,14 +45,14 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     const usuario = await buscarUsuarioPorEmail(email);
 
     if (!usuario) {
-      res.status(404).json({ message: "Usuário não encontrado" });
+      res.status(404).json({ message: "Email ou senha incorretos" });
       return;
     }
 
     const credenciaisValidas = await validarCredenciais(usuario, senha);
 
     if (!credenciaisValidas) {
-      res.status(401).json({ message: "Senha incorreta" });
+      res.status(401).json({ message: "Email ou senha incorretos" });
       return;
     }
 
