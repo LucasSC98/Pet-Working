@@ -33,6 +33,7 @@ const MeusPets = () => {
     "successo"
   );
   const [mensagemNotificacao, setMensagemNotificacao] = useState("");
+  const [toastId, setToastId] = useState("");
   const [petEmEdicao, setPetEmEdicao] = useState<Pet | null>(null);
   const [petParaDeletar, setPetParaDeletar] = useState<Pet | null>(null);
 
@@ -57,17 +58,18 @@ const MeusPets = () => {
 
   const handleDeletarPet = async (idPet: number) => {
     if (!user?.id) return;
-
     try {
       await api.delete(`/pets/${idPet}/usuario/${user.id}`);
       await petsAdicionados();
       setTipoNotificacao("successo");
       setMensagemNotificacao("Pet removido com sucesso!");
+      setToastId("pet-removido-sucesso");
       setMostrarNotificacao(true);
     } catch (error) {
       console.error("Erro ao deletar pet:", error);
       setTipoNotificacao("erro");
       setMensagemNotificacao("Erro ao deletar pet. Tente novamente.");
+      setToastId("pet-erro-deletar");
       setMostrarNotificacao(true);
     }
   };
@@ -122,40 +124,51 @@ const MeusPets = () => {
         onCancelar={() => setPetParaDeletar(null)}
       />
       <div className="dashboard-content">
+        {" "}
         <Toast
           message={mensagemNotificacao}
           type={tipoNotificacao}
           show={mostrarNotificacao}
+          testId={toastId}
           onClose={() => setMostrarNotificacao(false)}
         />
         <h1>Meus Pets</h1>
         {pets.length === 0 ? (
           <div className="no-pets-message">
             <h3>Nenhum Pet Cadastrado</h3>
-            <p>Você ainda não possui nenhum pet cadastrado.</p>
+            <p>Você ainda não possui nenhum pet cadastrado.</p>{" "}
             <button
               onClick={() => setShowCadastro(true)}
               className="btn-cadastrar-pet"
+              data-testid="btn-cadastrar-pet"
             >
               Cadastrar Pet
             </button>
           </div>
         ) : (
           <>
+            {" "}
             <button
               onClick={() => setShowCadastro(true)}
               className="btn-cadastrar-pet"
+              data-testid="btn-cadastrar-novo-pet"
             >
               Cadastrar Novo Pet
             </button>
             <div className="pets-list">
+              {" "}
               {pets.map((pet) => (
-                <div key={pet.id_pet} className="pet-card">
+                <div
+                  key={pet.id_pet}
+                  className="pet-card"
+                  data-testid={`pet-card-${pet.id_pet}`}
+                >
                   <div className="pet-actions">
                     <button
                       onClick={() => handleEditarPet(pet)}
                       className="btn-editar-pet"
                       title="Editar Pet"
+                      data-testid={`btn-editar-pet-${pet.id_pet}`}
                     >
                       <Pencil size={18} />
                     </button>
@@ -163,6 +176,7 @@ const MeusPets = () => {
                       onClick={() => handleDeletarClick(pet)}
                       className="btn-deletar-pet"
                       title="Exluir Pet"
+                      data-testid={`btn-deletar-pet-${pet.id_pet}`}
                     >
                       <Trash size={18} />
                     </button>
