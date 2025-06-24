@@ -7,13 +7,26 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    ports:
-      - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
       - app-network
-
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "root",
+          "-p${MYSQL_ROOT_PASSWORD}",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
   frontend:
     build: ./frontend/
     container_name: frontend
@@ -39,7 +52,8 @@ services:
       - PORT=${PORT}
       - CORS_ORIGIN=${CORS_ORIGIN}
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     networks:
       - app-network
   nginx:
