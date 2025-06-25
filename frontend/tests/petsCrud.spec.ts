@@ -1,9 +1,6 @@
 import { test, expect, Page } from "@playwright/test";
 import { faker } from "@faker-js/faker";
 
-/**
- * Gera dados realistas para pets usando faker
- */
 function gerarDadosPet(): {
   nome: string;
   idade: string;
@@ -13,7 +10,6 @@ function gerarDadosPet(): {
   descricao: string;
   foto: string;
 } {
-  // Usar apenas as espécies que existem no formulário real
   const especies = [
     "Cachorro",
     "Gato",
@@ -57,7 +53,6 @@ function gerarDadosPet(): {
   const racasGenericas = ["Comum", "SRD", "Puro", "Misto", "Outro"];
   const especie = faker.helpers.arrayElement(especies);
 
-  // Definir raças baseadas na espécie selecionada
   let racas;
   switch (especie) {
     case "Cachorro":
@@ -76,7 +71,6 @@ function gerarDadosPet(): {
       racas = racasGenericas;
   }
 
-  // Nomes realistas de pets por espécie
   const nomesCachorro = [
     "Rex",
     "Buddy",
