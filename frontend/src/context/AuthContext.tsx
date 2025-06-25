@@ -36,6 +36,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [toastType, setToastType] = useState<"successo" | "erro">("erro");
+  const [toastId, setToastId] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -77,15 +78,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
         JSON.stringify({ token, usuario })
       );
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
       setUser(usuario);
       setToastType("successo");
       setToastMessage("Login realizado com sucesso!");
+      setToastId("login-sucesso");
       setShowToast(true);
       navigate("/dashboard");
     } catch (error) {
       console.error("Erro no login:", error);
       let mensagemErro = "Erro ao fazer login. Tente novamente.";
+      let errorId = "erro-login-generico";
 
       if (error instanceof Error && "response" in error) {
         const apiError = error as ApiError;
@@ -93,18 +95,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
         switch (apiError.response.status) {
           case 401:
             mensagemErro = "Email ou senha incorretos";
+            errorId = "credenciais-invalidas";
             break;
           case 404:
             mensagemErro = "Email ou senha incorretos";
+            errorId = "credenciais-invalidas";
             break;
           default:
             mensagemErro =
               apiError.response.data.message || "Erro ao fazer login";
+            errorId = "erro-backend-login";
         }
       }
 
       setToastType("erro");
       setToastMessage(mensagemErro);
+      setToastId(errorId);
       setShowToast(true);
       throw error;
     } finally {
@@ -145,10 +151,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         atualizarDadosDoUsuario,
       }}
     >
+      {" "}
       <Toast
         message={toastMessage}
         type={toastType}
         show={showToast}
+        testId={toastId}
         onClose={() => setShowToast(false)}
       />
       {children}

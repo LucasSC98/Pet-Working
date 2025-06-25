@@ -1,5 +1,3 @@
-import https from "https";
-import fs from "fs";
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
@@ -21,8 +19,6 @@ const app = express();
 
 const ambiente = process.env.NODE_ENV || "test";
 
-const diretorioCertificados = "./certificados";
-
 console.log(`Iniciando servidor em ambiente: ${ambiente}`);
 
 app.use(
@@ -34,7 +30,6 @@ app.use(
 );
 app.use(express.json());
 app.use(authRota);
-
 app.use(rotausuarios);
 app.use(rotapets);
 app.use(agendamentorota);
@@ -44,10 +39,16 @@ app.use(produtoRota);
 app.use(pedidosRota);
 app.use(pagamentoRota);
 
+app.get("/", (req, res) => {
+  res.send(
+    `<h1 style="text-align: center; color: #4CAF50;">Servidor Petworking Backend</h1>
+     <p style="text-align: center;">API rodando em <strong>${process.env.DB_NAME}</strong> no ambiente <strong>${ambiente}</strong>.</p>`
+  );
+});
+
 async function iniciarAplicacao() {
   await sequelize.authenticate();
 
-  // Usar HTTP simples, pois o Nginx gerencia HTTPS
   app.listen(process.env.PORT, () => {
     console.log(
       chalk.green(

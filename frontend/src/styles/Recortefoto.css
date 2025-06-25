@@ -37,6 +37,33 @@
   background-color: #c82333;
 }
 
+.crop-button.use-direct {
+  background-color: #28a745;
+  color: white;
+}
+
+.crop-button.use-direct:hover {
+  background-color: #1e7e34;
+}
+
+.crop-button.start-crop {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.crop-button.start-crop:hover {
+  background-color: #e0a800;
+}
+
+.crop-button.back {
+  background-color: #6c757d;
+  color: white;
+}
+
+.crop-button.back:hover {
+  background-color: #545b62;
+}
+
 .crop-instruction {
   color: #026a6e;
   margin-top: 10px;
@@ -83,4 +110,37 @@
 .ReactCrop__crop-selection {
   border: 2px solid #026a6e !important;
   border-radius: 10px;
+}
+
+.image-preview-options {
+  text-align: center;
+  margin: 15px 0;
+}
+
+.preview-image {
+  max-width: 300px;
+  max-height: 300px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 2px solid #e0e0e0;
+  margin-bottom: 15px;
+}
+
+.preview-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.preview-instruction {
+  color: #6c757d;
+  font-size: 0.9em;
+  margin: 0;
+}
+
+.crop-tool {
+  text-align: center;
 }

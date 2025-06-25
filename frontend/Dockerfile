@@ -1,5 +1,5 @@
 # Estágio de build
-FROM node:18-alpine AS build
+FROM node:20 AS build
 
 WORKDIR /app
 

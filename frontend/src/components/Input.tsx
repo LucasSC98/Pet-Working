@@ -13,6 +13,7 @@ type InputProps = {
   ) => void;
   options?: { value: string; label: string }[];
   error?: string;
+  "data-testid"?: string;
 };
 
 const Input = ({
@@ -25,10 +26,12 @@ const Input = ({
   required = false,
   onChange,
   options,
+  error,
+  "data-testid": dataTestId,
 }: InputProps) => {
   return (
     <div className="input-box">
-      <label>{label}</label>
+      <label>{label}</label>{" "}
       {type === "select" ? (
         <select
           name={name}
@@ -36,6 +39,7 @@ const Input = ({
           onChange={onChange}
           style={{ color: textColor }}
           required
+          data-testid={dataTestId}
         >
           <option value="">{placeholder || "Selecione uma opção"}</option>
           {options?.map((option) => (
@@ -53,8 +57,10 @@ const Input = ({
           placeholder={placeholder}
           style={{ color: textColor }}
           required={required}
+          data-testid={dataTestId}
         />
       )}
+      {error && <span className="error-message">{error}</span>}
     </div>
   );
 };
