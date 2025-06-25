@@ -95,12 +95,6 @@ const NovoAgendamento = ({
         api.get(`/servicos`, config),
       ]);
 
-      console.log("Dados carregados:", {
-        enderecos: enderecosRes.data,
-        pets: petsRes.data,
-        servicos: servicosRes.data,
-      });
-
       setEnderecos(enderecosRes.data);
       setPets(petsRes.data);
       setServicos(servicosRes.data);
