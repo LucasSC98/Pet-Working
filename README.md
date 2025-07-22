@@ -49,7 +49,7 @@ PetWorking é uma aplicação web completa desenvolvida para gestão de pet shop
   ![Agendamentos](https://i.imgur.com/db9bNyg.png)
   
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 ### Backend
 - Node.js
